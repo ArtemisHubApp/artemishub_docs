@@ -5,6 +5,8 @@
 Este é o repositório central do **Artemis**. Aqui ficam a documentação do projeto, as decisões de arquitetura, os entregáveis de cada semana e o **kanban** (GitHub Project) onde organizamos as issues de todos os repositórios.
 
 > 📋 **Kanban:** [Projects da ArtemisHubApp](https://github.com/orgs/ArtemisHubApp/projects)
+>
+> 📄 **Definição do produto (PDR):** [docs/01-definicoes](docs/01-definicoes/README.md) — problema, personas, requisitos, riscos, premissas e métricas
 
 ## ✨ Sobre o projeto
 
@@ -59,7 +61,7 @@ A documentação será organizada conforme os entregáveis forem produzidos:
 
 ```text
 docs/
-├── 01-definicoes/      # problema, stakeholders, riscos e métricas (semana 1)
+├── 01-definicoes/      # ✅ PDR: problema, stakeholders, personas, requisitos, riscos, métricas (semana 1)
 ├── arquitetura/        # visão geral, diagramas e integrações entre os repositórios
 ├── adr/                # registros de decisões de arquitetura (ADRs)
 ├── avaliacoes/         # comparação LLM x RAG e avaliação dos agentes
@@ -80,32 +82,32 @@ Todas as issues — de qualquer repositório — entram no mesmo GitHub Project,
 
 ## 👩‍💻 Nossa equipe
 
-Desenvolvido pelo **Grupo 11**, com atuação em Inteligência Artificial, Ciência de Dados, Engenharia de Dados, Arquitetura de Software e DevOps.
+Desenvolvido pelo **Grupo 11**. Todas somos **AI Builders**, cada uma com uma frente principal de atuação:
 
 <table>
   <tr>
     <td align="center">
       <a href="https://github.com/CamilaSilvaC">
         <img src="https://github.com/CamilaSilvaC.png" width="90" alt="Camila"/><br/>
-        <b>Camila</b>
+        <b>Camila</b><br/><sub>Engenharia de Dados · DevOps</sub>
       </a>
     </td>
     <td align="center">
       <a href="https://github.com/AmandaElisa">
         <img src="https://github.com/AmandaElisa.png" width="90" alt="Amanda"/><br/>
-        <b>Amanda</b>
+        <b>Amanda</b><br/><sub>Software Architect · DevOps · Frontend</sub>
       </a>
     </td>
     <td align="center">
       <a href="https://github.com/anajbsouza">
         <img src="https://github.com/anajbsouza.png" width="90" alt="Ana Julia"/><br/>
-        <b>Ana Julia</b>
+        <b>Ana Julia</b><br/><sub>Ciência de Dados · Engenharia de Dados</sub>
       </a>
     </td>
     <td align="center">
       <a href="https://github.com/eduardaoliveirazorg-jpg">
         <img src="https://github.com/eduardaoliveirazorg-jpg.png" width="90" alt="Eduarda"/><br/>
-        <b>Eduarda</b>
+        <b>Eduarda</b><br/><sub>Ciência de Dados · Software Architect</sub>
       </a>
     </td>
   </tr>

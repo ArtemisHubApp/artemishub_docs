@@ -4,7 +4,7 @@ site_author: Grupo 11 · Artemis Hub
 site_url: https://artemishubapp.github.io/artemishub_docs/
 repo_name: ArtemisHubApp/artemishub_docs
 repo_url: https://github.com/ArtemisHubApp/artemishub_docs
-edit_uri: edit/main/docs/
+edit_uri: ""
 copyright: Grupo 11 · Residência de IA · Turma 2 · Instituto Eldorado · UnB · Brasília, 2026
 exclude_docs: |
   includes/
@@ -49,7 +49,6 @@ theme:
     - search.share
     - content.code.copy
     - content.tabs.link
-    - content.action.edit
     - content.tooltips
 
 extra_css:
@@ -67,13 +66,6 @@ plugins:
       effect: fade
       zoomable: true
       draggable: false
-  - git-revision-date-localized:
-      enabled: !ENV [MKDOCS_GIT_DATES, false]
-      enable_parallel_processing: false
-      type: date
-      locale: pt
-      enable_creation_date: true
-      fallback_to_build_date: true
 
 markdown_extensions:
   - abbr

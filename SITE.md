@@ -19,7 +19,6 @@ python -m venv .venv
 ```
 
 Acesse <http://127.0.0.1:8000/artemishub_docs/>.
-As datas do Git são habilitadas na publicação. Para ativá-las localmente após versionar os arquivos, defina `MKDOCS_GIT_DATES=true`.
 
 ## Onde mexer
 

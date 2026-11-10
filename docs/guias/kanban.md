@@ -33,4 +33,4 @@ Com o PR aprovado o card vai para **Testing**; após o merge, para **Done**.
 
 ## Como contribuir com esta documentação
 
-Cada página tem um botão de edição (lápis) que abre o arquivo no GitHub, e um bloco de **Rastreabilidade** no fim, com o documento de origem e o histórico de commits. Alterações devem ser feitas por *pull request*.
+Para contribuir, edite o arquivo correspondente na pasta `docs/` do repositório no GitHub e envie as alterações por *pull request*. As páginas incluem um bloco de **Rastreabilidade** no fim, com o documento de origem e o histórico de commits.

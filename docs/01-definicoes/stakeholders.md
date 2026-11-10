@@ -1,6 +1,6 @@
 # Mapa de Stakeholders
 
-> Parte do [PDR — Documento de Definição de Produto e Requisitos](README.md) · Semana 1
+> Parte do [PDR — Documento de Definição de Produto e Requisitos](README.md)
 
 | Stakeholder / Categoria | Quem são | Papel, Interesse e Influência no Projeto |
 |---|---|---|

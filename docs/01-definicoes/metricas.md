@@ -1,10 +1,10 @@
 # Métricas de Sucesso
 
-> Parte do [PDR — Documento de Definição de Produto e Requisitos](README.md) · Semana 1
+> Parte do [PDR — Documento de Definição de Produto e Requisitos](README.md)
 
 As métricas estão divididas pelos componentes da solução. Os critérios de go/no-go são definidos antes do treino e dos testes, para que a decisão de manter ou descartar cada parte seja objetiva. As metas são propostas e podem ser revistas após a análise exploratória dos dados.
 
-### 10.1 Modelo de estimativa salarial
+### Modelo de estimativa salarial
 
 | Métrica | O que mede | Meta proposta (go/no-go) |
 |---|---|---|
@@ -13,15 +13,15 @@ As métricas estão divididas pelos componentes da solução. Os critérios de g
 | Cobertura do intervalo | se o salário real cai dentro da faixa estimada | pelo menos 80% dos casos de teste |
 | Equidade do erro | se o modelo erra mais para algum grupo | diferença de erro relativo entre grupos de sexo e raça/cor de no máximo 5 pontos percentuais [12] |
 
-### 10.2 Base de conhecimento e respostas (RAG x LLM x CoT)
+### Base de conhecimento e respostas (RAG x LLM x CoT)
 
 | Métrica | O que mede | Meta proposta |
 |---|---|---|
 | Recall@k | se o documento certo está entre os k primeiros recuperados | pelo menos 80% com k = 5 |
 | Fidelidade (faithfulness) | se a resposta se apoia nos documentos recuperados, sem inventar | pelo menos 0,8 (RAGAS [8] ou LLM-as-judge) |
-| Acerto em perguntas com gabarito | qualidade da resposta final | RAG supera o LLM sem base de conhecimento na comparação da semana 3 |
+| Acerto em perguntas com gabarito | qualidade da resposta final | RAG supera o LLM sem base de conhecimento na avaliação comparativa |
 
-### 10.3 Sistema multiagente e aplicação
+### Sistema multiagente e aplicação
 
 | Métrica | O que mede | Meta proposta |
 |---|---|---|
@@ -29,7 +29,7 @@ As métricas estão divididas pelos componentes da solução. Os critérios de g
 | Tempo de resposta | experiência de uso | até 10 segundos por interação completa |
 | Segurança | resistência a injeção de prompt entre agentes e via conteúdo enviado pela usuária | nenhum agente executando instrução vinda de texto da usuária ou de documentos nos testes |
 
-### 10.4 Impacto para as usuárias
+### Impacto para as usuárias
 
 | Métrica | O que mede | Meta proposta |
 |---|---|---|
@@ -37,7 +37,7 @@ As métricas estão divididas pelos componentes da solução. Os critérios de g
 | Utilidade percebida | se a usuária entendeu melhor o próprio valor no mercado | pelo menos 70% respondendo "concordo" ou "concordo totalmente" |
 | Usabilidade (SUS) | facilidade de uso, inclusive sem tutorial | nota de pelo menos 70 (a média de referência é 68 [9]) |
 
-### 10.5 Acessibilidade e inclusão
+### Acessibilidade e inclusão
 
 | Métrica | O que mede | Meta proposta |
 |---|---|---|
@@ -45,7 +45,7 @@ As métricas estão divididas pelos componentes da solução. Os critérios de g
 | Linguagem simples | se os textos são compreensíveis para diferentes níveis de escolaridade | validação com pelo menos uma usuária de baixa escolaridade ou baixa familiaridade digital |
 | Acesso multiplataforma | uso em celular e computador | funcionamento em navegadores móveis e desktop |
 
-### 10.6 MLOps
+### MLOps
 
 | Métrica | O que mede | Meta proposta |
 |---|---|---|

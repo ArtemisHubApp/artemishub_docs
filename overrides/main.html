@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#53063a">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ page.title ~ ' · ' if page and page.title and not page.is_homepage }}Artemis">
+  <meta property="og:description" content="{{ config.site_description }}">
+{% endblock %}

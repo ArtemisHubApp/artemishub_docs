@@ -1,0 +1,156 @@
+site_name: Artemis Hub · Documentação
+site_description: Inteligência Artificial para impulsionar mulheres em STEM. Documentação do projeto Artemis (Grupo 11, Residência de IA, Instituto Eldorado · UnB).
+site_author: Grupo 11 · Artemis Hub
+site_url: https://artemishubapp.github.io/artemishub_docs/
+repo_name: ArtemisHubApp/artemishub_docs
+repo_url: https://github.com/ArtemisHubApp/artemishub_docs
+edit_uri: edit/main/docs/
+copyright: Grupo 11 · Residência de IA · Turma 2 · Instituto Eldorado · UnB · Brasília, 2026
+exclude_docs: |
+  includes/
+
+theme:
+  name: material
+  language: pt-BR
+  custom_dir: overrides
+  logo: assets/images/brand/emblem-light.svg
+  favicon: assets/images/brand/favicon.svg
+  font:
+    text: Plus Jakarta Sans
+    code: JetBrains Mono
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Mudar para o tema escuro
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/white-balance-sunny
+        name: Mudar para o tema claro
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - navigation.footer
+    - navigation.tracking
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.tabs.link
+    - content.action.edit
+    - content.tooltips
+
+extra_css:
+  - assets/stylesheets/artemis.css
+
+extra_javascript:
+  - assets/javascripts/artemis.js
+
+plugins:
+  - search:
+      lang: pt
+  - glightbox:
+      touchNavigation: true
+      loop: false
+      effect: fade
+      zoomable: true
+      draggable: false
+  - git-revision-date-localized:
+      enabled: !ENV [MKDOCS_GIT_DATES, false]
+      enable_parallel_processing: false
+      type: date
+      locale: pt
+      enable_creation_date: true
+      fallback_to_build_date: true
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - pymdownx.betterem
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.snippets:
+      auto_append:
+        - docs/includes/abbreviations.md
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/ArtemisHubApp
+      name: Artemis Hub no GitHub
+
+nav:
+  - Início: index.md
+  - Projeto:
+      - projeto/index.md
+      - Brainstorming (Round Robin): projeto/brainstorming.md
+      - Stakeholders: projeto/stakeholders.md
+      - Personas: projeto/personas.md
+  - Produto (PDR):
+      - produto/index.md
+      - Requisitos: produto/requisitos.md
+      - Riscos: produto/riscos.md
+      - Premissas e limitações: produto/premissas.md
+      - Métricas de sucesso: produto/metricas.md
+      - Perguntas orientadoras: produto/guiding-questions.md
+  - Base de conhecimento (RAG):
+      - rag/index.md
+      - Fontes: rag/fontes.md
+      - Pipeline de ingestão: rag/pipeline.md
+      - Chunking: rag/chunking.md
+      - Embeddings e banco vetorial: rag/embeddings.md
+      - Consulta e resposta: rag/consulta.md
+      - Demonstração: rag/demonstracao.md
+  - Arquitetura:
+      - arquitetura/index.md
+      - Arquitetura do RAG: arquitetura/rag.md
+  - Avaliação:
+      - avaliacao/index.md
+      - Limitações e próximos passos: avaliacao/limitacoes.md
+      - Relatório de validação: avaliacao/relatorio-de-validacao.md
+      - Relatório da demonstração: avaliacao/relatorio-da-demonstracao.md
+  - Guias:
+      - guias/reproduzir.md
+      - Como trabalhamos (kanban): guias/kanban.md
+  - Sobre:
+      - sobre/roadmap.md
+      - Equipe: sobre/equipe.md
+      - Referências: sobre/referencias.md
+      - Glossário: sobre/glossario.md

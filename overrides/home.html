@@ -1,0 +1,95 @@
+{% extends "main.html" %}
+
+{% block tabs %}
+  {{ super() }}
+  <style>
+    .md-main__inner { margin: 0; }
+    .md-content { display: none; }
+    @media screen and (min-width: 60em) { .md-sidebar--secondary { display: none; } }
+    @media screen and (min-width: 76.25em) { .md-sidebar--primary { display: none; } }
+  </style>
+
+  <div class="art-home">
+
+    <!-- HERO ------------------------------------------------------------ -->
+    <section class="art-hero">
+      <div class="art-hero__inner">
+        <div>
+          <span class="art-eyebrow"><i></i> Residência de IA · Turma 2 · Grupo 11</span>
+          <h1 class="sr">Artemis Hub</h1>
+          <img class="art-wordmark only-light" src="{{ 'assets/images/brand/wordmark-light.svg' | url }}" alt="artemis.HUB">
+          <img class="art-wordmark only-dark" src="{{ 'assets/images/brand/wordmark-dark.svg' | url }}" alt="artemis.HUB">
+          <p class="art-hero__tag">Inteligência Artificial para impulsionar mulheres em STEM.</p>
+          <p class="art-hero__lede">
+            Autonomia, valorização profissional e decisões de carreira mais seguras para mulheres em ciência, tecnologia, engenharia e matemática, com orientação confiável e sempre fundamentada em fontes.
+          </p>
+          <div class="art-cta">
+            <a class="art-btn art-btn--primary" href="{{ 'projeto/' | url }}">Explorar a documentação</a>
+            <a class="art-btn art-btn--ghost" href="{{ 'rag/' | url }}">Ver a base de conhecimento</a>
+          </div>
+        </div>
+
+        <div class="art-emblem">
+          <img class="only-light" src="{{ 'assets/images/brand/emblem-light.svg' | url }}" alt="Artemis, a caçadora, em um arco de lua crescente" width="539" height="539">
+          <img class="only-dark" src="{{ 'assets/images/brand/emblem-dark.svg' | url }}" alt="" width="539" height="539">
+        </div>
+      </div>
+    </section>
+
+    <!-- PERGUNTA ESSENCIAL --------------------------------------------- -->
+    <section class="art-section art-reveal">
+      <p class="art-kicker">Big Ideia e Essential Question</p>
+      <div class="art-quote">
+        <p>Como podemos utilizar Inteligência Artificial para empoderar mulheres a reconhecerem seu valor profissional, superarem barreiras no mercado de trabalho e tomarem decisões mais seguras sobre suas carreiras?</p>
+        <small>Empoderando pessoas com IA para compreender melhor, decidir melhor e viver melhor.</small>
+      </div>
+    </section>
+
+    <!-- FRENTES ---------------------------------------------------------- -->
+    <section class="art-section art-reveal">
+      <p class="art-kicker">A plataforma</p>
+      <h2>Seis frentes para decidir melhor</h2>
+      <div class="art-grid art-grid--3">
+        <div class="art-card"><span class="ico">{% include ".icons/material/briefcase-search-outline.svg" %}</span><h3>Análise de perfil e currículo</h3><p>Identificação de competências e pontos fortes.</p></div>
+        <div class="art-card"><span class="ico">{% include ".icons/material/cash-multiple.svg" %}</span><h3>Inteligência salarial</h3><p>Referências de remuneração e informações sobre desigualdade salarial.</p></div>
+        <div class="art-card"><span class="ico">{% include ".icons/material/compass-outline.svg" %}</span><h3>Oportunidades personalizadas</h3><p>Recomendações alinhadas ao perfil e aos objetivos profissionais.</p></div>
+        <div class="art-card"><span class="ico">{% include ".icons/material/trending-up.svg" %}</span><h3>Desenvolvimento de carreira</h3><p>Identificação de habilidades a aprimorar.</p></div>
+        <div class="art-card"><span class="ico">{% include ".icons/material/forum-outline.svg" %}</span><h3>Simulação de negociação salarial</h3><p>Prática de conversas profissionais com auxílio de IA.</p></div>
+        <div class="art-card"><span class="ico">{% include ".icons/material/book-open-page-variant-outline.svg" %}</span><h3>Orientação confiável</h3><p>Acesso a informações fundamentadas sobre direitos e carreira.</p></div>
+      </div>
+    </section>
+
+    <!-- EXPLORAR --------------------------------------------------------- -->
+    <section class="art-section art-reveal">
+      <p class="art-kicker">Documentação</p>
+      <h2>Explore a documentação</h2>
+      <div class="art-grid art-grid--3">
+        <a class="art-card" href="{{ 'projeto/' | url }}"><span class="ico">{% include ".icons/material/lightbulb-on-outline.svg" %}</span><h3>Projeto</h3><p>A ideia, o problema, o cenário e as pessoas.</p><span class="more">Conhecer o projeto</span></a>
+        <a class="art-card" href="{{ 'produto/' | url }}"><span class="ico">{% include ".icons/material/clipboard-text-outline.svg" %}</span><h3>Produto (PDR)</h3><p>Requisitos, riscos, premissas e métricas de sucesso.</p><span class="more">Ver o PDR</span></a>
+        <a class="art-card" href="{{ 'rag/' | url }}"><span class="ico">{% include ".icons/material/database-search-outline.svg" %}</span><h3>Base de conhecimento</h3><p>Como o Artemis busca e cita fontes oficiais para responder.</p><span class="more">Abrir o RAG</span></a>
+        <a class="art-card" href="{{ 'arquitetura/' | url }}"><span class="ico">{% include ".icons/material/sitemap-outline.svg" %}</span><h3>Arquitetura</h3><p>Como as partes da plataforma se conectam.</p><span class="more">Ver diagramas</span></a>
+        <a class="art-card" href="{{ 'avaliacao/' | url }}"><span class="ico">{% include ".icons/material/chart-line.svg" %}</span><h3>Avaliação</h3><p>Como medimos a qualidade e o que ainda vamos melhorar.</p><span class="more">Ver métricas</span></a>
+        <a class="art-card" href="{{ 'guias/reproduzir/' | url }}"><span class="ico">{% include ".icons/material/rocket-launch-outline.svg" %}</span><h3>Guias</h3><p>Como reproduzir o projeto e como trabalhamos.</p><span class="more">Começar</span></a>
+      </div>
+    </section>
+
+    <!-- EQUIPE ----------------------------------------------------------- -->
+    <section class="art-section art-reveal">
+      <p class="art-kicker">Grupo 11</p>
+      <h2>Quem constrói o Artemis</h2>
+      <div class="art-team">
+        <a class="art-person" href="https://github.com/CamilaSilvaC"><img src="https://github.com/CamilaSilvaC.png?size=160" alt="Camila Silva Cavalcante" loading="lazy"><b>Camila</b><span>Engenharia de Dados · DevOps</span></a>
+        <a class="art-person" href="https://github.com/AmandaElisa"><img src="https://github.com/AmandaElisa.png?size=160" alt="Amanda Elisa de Oliveira Carvalho" loading="lazy"><b>Amanda</b><span>Arquiteta de software e engenheira de software</span></a>
+        <a class="art-person" href="https://github.com/anajbsouza"><img src="https://github.com/anajbsouza.png?size=160" alt="Ana Júlia Batista de Souza" loading="lazy"><b>Ana Júlia</b><span>Ciência de Dados · Engenharia de Dados</span></a>
+        <a class="art-person" href="https://github.com/eduardaoliveirazorg-jpg"><img src="https://github.com/eduardaoliveirazorg-jpg.png?size=160" alt="Eduarda Lima de Oliveira" loading="lazy"><b>Eduarda</b><span>Ciência de Dados · Arquitetura de Software</span></a>
+      </div>
+      <div class="art-partners">
+        <p>Challenge 2: Qualidade de Vida e Tomada de Decisão com IA. Residência de IA · Turma 2, Instituto Eldorado · UnB.</p>
+        <img src="{{ 'assets/images/logos/parceiros.png' | url }}" alt="UnB, Eldorado e Lab Livre" loading="lazy">
+      </div>
+    </section>
+
+  </div>
+{% endblock %}
+
+{% block content %}{% endblock %}

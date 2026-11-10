@@ -1,8 +1,8 @@
 # Referências e Glossário
 
-> Parte do [PDR — Documento de Definição de Produto e Requisitos](README.md) · Semana 1
+> Parte do [PDR — Documento de Definição de Produto e Requisitos](README.md)
 
-## 12. Referências
+## Referências
 
 - Ministério do Trabalho e Emprego. RAIS – Programa de Disseminação das Estatísticas do Trabalho (PDET). Microdados públicos e não identificados.[pdet.mte.gov.br/rais](http://pdet.mte.gov.br/rais) · arquivos por ano: ftp://ftp.mtps.gov.br/pdet/microdados/RAIS/ · serviço de consulta:[gov.br](https://www.gov.br/pt-br/servicos/solicitar-consulta-as-estatisticas-da-rais-e-do-caged)
 
@@ -32,7 +32,7 @@
 
 - [IBGE Educa — As mulheres do Brasil](https://educa.ibge.gov.br/jovens/materias-especiais/22052-as-mulheres-do-brasil.html)
 
-## 13. Glossário
+## Glossário
 
 ### Conceitos gerais
 

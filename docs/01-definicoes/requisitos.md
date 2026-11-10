@@ -1,12 +1,12 @@
 # Requisitos Funcionais e Não Funcionais
 
-> Parte do [PDR — Documento de Definição de Produto e Requisitos](README.md) · Semana 1
+> Parte do [PDR — Documento de Definição de Produto e Requisitos](README.md)
 
-### 7.1 Metodologia
+### Metodologia
 
 A elicitação de requisitos foi realizada a partir da análise das respostas de um formulário aplicado ao público-alvo, com o objetivo de identificar suas principais dificuldades, necessidades e expectativas em relação à solução proposta. Os resultados foram considerados em conjunto com o problema definido pela equipe e as funcionalidades priorizadas durante a concepção do projeto.
 
-### 7.2 Requisitos Funcionais
+### Requisitos Funcionais
 
 | Código | Requisito | Descrição |
 |---|---|---|
@@ -28,7 +28,7 @@ A elicitação de requisitos foi realizada a partir da análise das respostas de
 | RF-16 | Acompanhamento do plano | O sistema deve permitir que a usuária consulte seu plano e atualize o estado das ações como não iniciada, em andamento ou concluída. |
 | RF-17 | Atualização das orientações | O sistema deve permitir que a usuária solicite a atualização das recomendações e do plano de desenvolvimento após modificar suas competências, objetivos ou experiências profissionais. |
 
-### 7.3 Requisitos Não Funcionais
+### Requisitos Não Funcionais
 
 | Código | Requisito | Descrição |
 |---|---|---|

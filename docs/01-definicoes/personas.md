@@ -1,6 +1,6 @@
 # Personas
 
-> Parte do [PDR — Documento de Definição de Produto e Requisitos](README.md) · Semana 1
+> Parte do [PDR — Documento de Definição de Produto e Requisitos](README.md)
 
 As personas apresentadas a seguir foram elaboradas com base na análise das respostas do formulário aplicado ao público-alvo do projeto. Elas sintetizam os principais perfis de necessidades identificados e orientam a definição das funcionalidades e dos fluxos de uso da solução.
 

@@ -1,6 +1,6 @@
 # Perguntas Orientadoras (Guiding Questions)
 
-> Parte do [PDR — Documento de Definição de Produto e Requisitos](README.md) · Semana 1
+> Parte do [PDR — Documento de Definição de Produto e Requisitos](README.md)
 
 | # | Guiding Questions (Consolidadas) |
 |---|---|
@@ -12,7 +12,7 @@
 | G6 | Quais são os principais desafios, limitações e riscos técnicos/sociais que a solução enfrentará? |
 | G7 | Como mitigar vieses enraizados na sociedade e evitar que a IA reforce preconceitos? |
 | G8 | De que forma a solução garante acessibilidade universal e inclusão para diferentes perfis de usuárias? |
-| G9 | Como será feita a ponte prática entre o público-alvo e a tecnologia para validar as entregas? |
+| G9 | Como será feita a ponte prática entre o público-alvo e a tecnologia para validar a solução? |
 | G10 | Quais agentes externos (acadêmicos, governamentais ou sociais) podem atuar como apoiadores nesse processo? |
 
 ---

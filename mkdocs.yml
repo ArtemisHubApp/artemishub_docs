@@ -154,6 +154,7 @@ nav:
   - Guias:
       - guias/reproduzir.md
       - Como trabalhamos (kanban): guias/kanban.md
+      - Orquestrador de SDD (IA): guias/orquestrador.md
   - Sobre:
       - sobre/roadmap.md
       - Equipe: sobre/equipe.md

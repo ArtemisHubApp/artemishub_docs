@@ -18,15 +18,15 @@ O time quer trabalhar com SDD (*spec-driven development*): primeiro se entende e
 ## Decisão
 
 - **Esteira de SDD:** o **Superpowers** (brainstorming → spec → plano → TDD → execução → revisão), que já é usado pelo time e está completo. Por cima dele, uma skill do projeto, **`artemis-sdd`**, com o que é só do Artemis:
-  - o tamanho da tarefa (S0 a S3) decide quanto processo ela leva;
-  - **toda tarefa tem uma issue associada**;
-  - todo trabalho começa numa worktree criada a partir da `staging`;
-  - spec e plano ficam no repo do submódulo, em `docs/superpowers/`;
-  - **docs sempre atualizadas** no mesmo PR, com ADR quando couber;
-  - um checklist de PR.
+    - o tamanho da tarefa (S0 a S3) decide quanto processo ela leva;
+    - **toda tarefa tem uma issue associada**;
+    - todo trabalho começa numa worktree criada a partir da `staging`;
+    - spec e plano ficam no repo do submódulo, em `docs/superpowers/`;
+    - **docs sempre atualizadas** no mesmo PR, com ADR quando couber;
+    - um checklist de PR.
 - **Como cada agente recebe o Superpowers:**
-  - **Claude:** pelo plugin oficial (`superpowers@claude-plugins-official`), habilitado no `.claude/settings.json` do orquestrador;
-  - **Codex, Gemini e GPT:** por uma cópia única em `.agents/skills/`, com a origem registrada em `skills-lock.json`.
+    - **Claude:** pelo plugin oficial (`superpowers@claude-plugins-official`), habilitado no `.claude/settings.json` do orquestrador;
+    - **Codex, Gemini e GPT:** por uma cópia única em `.agents/skills/`, com a origem registrada em `skills-lock.json`.
 - A **fonte editável** da `artemis-sdd` é `.agents/skills/artemis-sdd/`. O script `scripts/sync_skills.py` gera a cópia em `.claude/skills/`, sem links simbólicos, porque eles quebram no Windows. O CI falha se as duas cópias divergirem.
 - **Skills só no orquestrador:** o CI compartilhado (ADR-006) tem o passo `no-local-skills`, que falha se um repo filho tiver `.claude/skills`, `.agents/skills`, `agent/skills` ou `skills-lock.json`. Skill nova entra por PR no orquestrador.
 - A `orchestrator` antiga é **aposentada**. A ideia útil dela, classificar a tarefa por tamanho e risco, passou para a `artemis-sdd`.

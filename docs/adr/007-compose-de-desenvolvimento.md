@@ -20,8 +20,8 @@ Adiantar o **`docker-compose.yml`** no orquestrador como um **ambiente de desenv
 - volumes nomeados guardam o ambiente virtual e o cache de modelos do Hugging Face. O `uv sync` e o download do modelo de embeddings acontecem só uma vez;
 - `UV_LOCKED=1`: se o `uv.lock` estiver desatualizado, o container **falha de propósito**, em vez de instalar versões diferentes das do CI (ADR-006);
 - serviços:
-  - `rag` e `agents`, já usáveis;
-  - `backend` e `frontend`, desligados (atrás do perfil `app`) até existir código.
+    - `rag` e `agents`, já usáveis;
+    - `backend` e `frontend`, desligados (atrás do perfil `app`) até existir código.
 
 Uso, só com o Docker Desktop instalado:
 

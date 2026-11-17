@@ -18,14 +18,14 @@ O `rag` já começou a migrar para camadas (`src/domain`, `src/application/{use_
 
 - **4 princípios para quem escreve código**, adaptados de *andrej-karpathy-skills* (MIT): pensar antes de codar, simplicidade primeiro, mudanças cirúrgicas e execução guiada por objetivo;
 - **código limpo:**
-  - nomes que dizem a intenção;
-  - funções curtas, com uma responsabilidade;
-  - nada de números ou textos "mágicos" no meio do código;
-  - type hints em funções públicas;
-  - erros explícitos;
-  - nada de código morto;
-  - comentário explica o *porquê*;
-  - testes no formato *arrange, act, assert*;
+    - nomes que dizem a intenção;
+    - funções curtas, com uma responsabilidade;
+    - nada de números ou textos "mágicos" no meio do código;
+    - type hints em funções públicas;
+    - erros explícitos;
+    - nada de código morto;
+    - comentário explica o *porquê*;
+    - testes no formato *arrange, act, assert*;
 - **clean architecture (hexagonal)** para `rag`, `agents` e `backend`:
 
 ```mermaid
@@ -53,5 +53,5 @@ A revisão de PR, pelo checklist e pela etapa de revisão do Superpowers, usa o 
 
 ## Consequências
 
-- Os PRs de CI nos repos filhos incluem o contrato de camadas e uma rodada de `ruff format`.
+- Os PRs de CI nos repos filhos incluem as regras ampliadas do ruff no `pyproject.toml` de cada repo (o CI compartilhado usa a configuração do próprio repo), o contrato de camadas e uma rodada de `ruff format`.
 - O `frontend` ganha o equivalente (ESLint e fronteiras entre camadas) quando tiver stack.

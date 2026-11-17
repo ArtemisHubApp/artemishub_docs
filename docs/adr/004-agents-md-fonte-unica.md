@@ -15,12 +15,12 @@ Cada integrante do grupo usa um agente diferente: **Codex, Gemini, Claude e GPT*
 ## Decisão
 
 - O **`AGENTS.md`** na raiz do orquestrador é a única fonte das regras. Ele traz:
-  - o que é o Artemis;
-  - o mapa dos repos;
-  - a regra de ouro: antes de mexer no repo X, ler o contexto de X;
-  - as regras de SDD, de branches e worktrees, de higiene do GitHub e de código limpo;
-  - a regra de ADR;
-  - kanban, segurança e cuidados com submódulos.
+    - o que é o Artemis;
+    - o mapa dos repos;
+    - a regra de ouro: antes de mexer no repo X, ler o contexto de X;
+    - as regras de SDD, de branches e worktrees, de higiene do GitHub e de código limpo;
+    - a regra de ADR;
+    - kanban, segurança e cuidados com submódulos.
 - **`CLAUDE.md`** e **`GEMINI.md`** têm uma única linha, `@AGENTS.md`, que importa o conteúdo. Não há texto duplicado.
 - O Codex lê o `AGENTS.md` direto.
 - Quem usa GPT pelo navegador anexa o `AGENTS.md` na conversa. O README do orquestrador explica como.

@@ -37,7 +37,7 @@ jobs:
 
 O bloco `permissions` é obrigatório: um workflow chamado não pode ter mais permissões que o repo que o chama. O tipo `edited` faz o check do título rodar de novo quando alguém corrige o título do PR.
 
-- Em todo PR e push, o `python-ci.yml` verifica:
+- Em todo PR e push, o `python-ci.yml` verifica (o título, só em PR):
   1. se o lock está em dia (`uv lock --check`) e instala exatamente o que ele trava (`uv sync --locked`);
   2. ruff (lint e formatação) e import-linter, quando configurado (ADR-010);
   3. pyright, só avisando;
@@ -46,7 +46,7 @@ O bloco `permissions` é obrigatório: um workflow chamado não pode ter mais pe
   6. que o repo não tenha cópia local de skills (ADR-005);
   7. segredos vazados, com o **gitleaks**.
 - O gitleaks roda pela **CLI em container** (`ghcr.io/gitleaks/gitleaks:v8.24.3`), não pela `gitleaks-action`, porque a action exige licença paga em repos de organização.
-- O Dependabot (`package-ecosystem: uv`) propõe atualizações de dependências uma vez por semana, com os PRs agrupados.
+- Cada repo Python terá um Dependabot (`package-ecosystem: uv`) propondo atualizações de dependências uma vez por semana, com os PRs agrupados.
 - **CD:** por enquanto, só o deploy deste site no GitHub Pages. O destino de deploy do app será decidido na semana 6.
 
 ## Alternativas
@@ -56,6 +56,6 @@ O bloco `permissions` é obrigatório: um workflow chamado não pode ter mais pe
 
 ## Consequências
 
-- O `rag` recebe um PR que remove os `requirements*`, troca o Dockerfile para `uv sync --frozen` e passa o CI a chamar o workflow central.
+- Os repos filhos recebem um PR cada para adotar isto: o `rag` remove os `requirements*`, troca o Dockerfile para `uv sync --frozen` e passa a chamar o workflow central; o `agents` troca o CI próprio pela chamada; os dois ganham o `dependabot.yml`.
 - Mudou uma regra de CI? A mudança é feita uma vez no orquestrador e vale para todos.
 - O próprio orquestrador também exige `uv.lock` no CI.

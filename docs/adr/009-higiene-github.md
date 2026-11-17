@@ -23,9 +23,10 @@ Regras para pessoas e agentes, escritas no `AGENTS.md` do orquestrador:
 5. **Merge:** squash nos PRs para `staging`, de modo que o título do PR vira o commit. A release `staging → main` usa merge commit.
 6. **PR pequeno:** idealmente menos de cerca de 400 linhas alteradas, sem contar lockfiles e dados. Abra como *draft* enquanto estiver em andamento.
 7. **Nunca** dar `push --force` em `staging` ou `main`, nem commitar `.env`, dados pessoais reais ou arquivos grandes fora do DVC.
-8. **Depois do merge,** a branch é apagada automaticamente (configuração do repo) e a worktree é limpa com `prune` (ADR-008).
+8. **Depois do merge,** a branch é apagada automaticamente (configuração do repo, que um admin liga em cada um) e a worktree é limpa com `prune` (ADR-008).
 
 **Onde ficam os templates:** num repo `ArtemisHubApp/.github`. É o jeito do próprio GitHub de aplicar os mesmos templates a todos os repos da org, sem copiar arquivo em cada um. Ele terá:
+
 - formulários de issue (feature, bug, tarefa e documentação, com os campos *Semana*, *Critérios de aceite* e *Repo afetado*);
 - um template de PR com checklist;
 - labels padrão (`semana-N`, `prioridade: …`, `tipo: …`);

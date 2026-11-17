@@ -2,6 +2,8 @@
 
 Cada decisão de arquitetura relevante é registrada aqui, com contexto, alternativas e consequências.
 
+Para um ADR novo, copie o formato do [ADR-002](002-framework-multiagente.md) e use o próximo número livre, com 3 dígitos. Toda decisão que muda arquitetura, stack ou processo gera um ADR no mesmo PR da mudança (regra do `AGENTS.md` do [orquestrador](https://github.com/ArtemisHubApp/artemishub_orchestration)).
+
 | ADR | Decisão | Status |
 |---|---|---|
 | ADR-001 | Stack do projeto (backend, frontend, banco, deploy) | em elaboração ([artemishub_docs#3](https://github.com/ArtemisHubApp/artemishub_docs/issues/3)) |

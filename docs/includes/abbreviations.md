@@ -12,3 +12,7 @@
 *[MTE]: Ministério do Trabalho e Emprego
 *[CLT]: Consolidação das Leis do Trabalho
 *[HNSW]: Hierarchical Navigable Small World — índice de vizinhos mais próximos
+*[CBO]: Classificação Brasileira de Ocupações
+*[UF]: Unidade da Federação
+*[PII]: Dados pessoais identificáveis
+*[ADR]: Architecture Decision Record — registro de decisão de arquitetura

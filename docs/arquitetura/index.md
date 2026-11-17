@@ -11,9 +11,11 @@ O Artemis é dividido em **cinco repositórios**, cada um com uma responsabilida
 flowchart LR
     U([Usuária]) --> FE[artemishub_frontend<br/>Interface web]
     FE --> BE[artemishub_backend<br/>API]
-    BE --> AG[artemishub_agents<br/>Multiagentes LLM]
+    BE --> AG[artemishub_agents<br/>Multiagentes · LangGraph]
     AG --> RAG[artemishub_rag<br/>Base de conhecimento]
-    AG --> LLM[(Provedor de LLM)]
+    AG --> LLM[(Gemini via API<br/>compatível OpenAI)]
+    AG --> RAIS[(RAIS STEM 2025)]
+    AG -. traces .-> LF[[Langfuse]]
     RAG --> SRC[(Fontes públicas<br/>CLT, legislação, dados)]
 ```
 
@@ -39,7 +41,7 @@ flowchart LR
 
 ## Decisões de arquitetura (ADRs)
 
-As decisões serão registradas como ADR neste repositório, conforme forem tomadas. A stack do frontend está "a definir pela equipe".
+As decisões ficam em [Decisões (ADRs)](../adr/index.md). O sistema multiagente usa LangGraph e Langfuse ([ADR-002](../adr/002-framework-multiagente.md)); o desenho completo está em [Arquitetura multiagente](multiagentes.md). A stack do frontend continua "a definir pela equipe" (ADR-001).
 
 ## Próximos documentos previstos
 

@@ -133,6 +133,11 @@ nav:
   - Arquitetura:
       - arquitetura/index.md
       - Arquitetura do RAG: arquitetura/rag.md
+      - Arquitetura multiagente: arquitetura/multiagentes.md
+      - Modelo salarial: arquitetura/modelo-salarial.md
+      - Decisões (ADRs):
+          - adr/index.md
+          - ADR-002 Framework multiagente: adr/002-framework-multiagente.md
   - Avaliação:
       - avaliacao/index.md
       - Limitações e próximos passos: avaliacao/limitacoes.md

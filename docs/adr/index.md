@@ -11,3 +11,6 @@ Cada decisão de arquitetura relevante é registrada aqui, com contexto, alterna
 | [ADR-005](005-sdd-superpowers.md) | SDD com Superpowers + `artemis-sdd`; skills só no orquestrador | proposto |
 | [ADR-006](006-uv-e-ci-reutilizavel.md) | uv + `uv.lock` como única fonte de versões e CI reutilizável | proposto |
 | [ADR-007](007-compose-de-desenvolvimento.md) | docker-compose como ambiente de desenvolvimento | proposto |
+| [ADR-008](008-staging-e-worktrees.md) | Fluxo `staging → main` com worktrees | proposto |
+| [ADR-009](009-higiene-github.md) | Higiene do GitHub: issue por tarefa, Conventional Commits, PR pequeno | proposto |
+| [ADR-010](010-codigo-limpo-hexagonal.md) | Código limpo e clean architecture (hexagonal) com checagem no CI | proposto |

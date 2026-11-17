@@ -9,3 +9,5 @@ Cada decisão de arquitetura relevante é registrada aqui, com contexto, alterna
 | [ADR-003](003-repo-orquestrador.md) | Repo orquestrador com submódulos | proposto |
 | [ADR-004](004-agents-md-fonte-unica.md) | `AGENTS.md` como fonte única de regras para todos os agentes de IA | proposto |
 | [ADR-005](005-sdd-superpowers.md) | SDD com Superpowers + `artemis-sdd`; skills só no orquestrador | proposto |
+| [ADR-006](006-uv-e-ci-reutilizavel.md) | uv + `uv.lock` como única fonte de versões e CI reutilizável | proposto |
+| [ADR-007](007-compose-de-desenvolvimento.md) | docker-compose como ambiente de desenvolvimento | proposto |

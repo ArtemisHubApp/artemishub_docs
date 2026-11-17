@@ -141,6 +141,8 @@ nav:
           - ADR-003 Repo orquestrador: adr/003-repo-orquestrador.md
           - ADR-004 AGENTS.md como fonte única: adr/004-agents-md-fonte-unica.md
           - ADR-005 SDD com Superpowers: adr/005-sdd-superpowers.md
+          - ADR-006 uv e CI reutilizável: adr/006-uv-e-ci-reutilizavel.md
+          - ADR-007 Compose de desenvolvimento: adr/007-compose-de-desenvolvimento.md
   - Avaliação:
       - avaliacao/index.md
       - Limitações e próximos passos: avaliacao/limitacoes.md

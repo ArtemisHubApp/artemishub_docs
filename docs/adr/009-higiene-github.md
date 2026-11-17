@@ -17,7 +17,7 @@ Em 17/11/2026 nenhum repo tinha template de issue ou de PR. Havia **19 branches 
 Regras para pessoas e agentes, escritas no `AGENTS.md` do orquestrador:
 
 1. **Toda tarefa tem uma issue associada.** Não há código, doc ou configuração sem issue no kanban. A branch leva o número da issue (`feat/<nº>-…`) e o PR fecha a issue com `Closes #<nº>`. Se a issue não existir, o agente cria ou pede antes de começar.
-2. **Docs sempre atualizadas** quando algo relevante muda (comportamento, comando, configuração, arquitetura, dependência). O README ou o `AGENTS.md` do repo, este site e um ADR, quando couber, são atualizados no mesmo PR. Um PR que muda algo relevante sem tocar em doc precisa dizer por quê.
+2. **Docs sempre atualizadas** quando algo relevante muda (comportamento, comando, configuração, arquitetura, dependência). O README ou o `AGENTS.md` do repo, este site e um ADR, quando couber, são atualizados no mesmo PR. Se a mudança altera algo que **este site (GitHub Pages)** descreve, abre-se também um PR aqui no `artemishub_docs`, e os dois PRs citam um ao outro. O site publica a partir da `main`. Um PR que muda algo relevante sem tocar em doc precisa dizer por quê.
 3. **Uma issue, uma branch, um PR.** Branches com nome automático (`claude/…`, `codex/…`) são renomeadas antes do PR.
 4. **Commits e títulos de PR no padrão [Conventional Commits](https://www.conventionalcommits.org/pt-br/)** (`feat:`, `fix:`, `chore:`, `docs:`, `refactor:`, `test:`, `ci:` e `release:`), em português depois dos dois-pontos. O CI confere o título do PR.
 5. **Merge:** squash nos PRs para `staging`, de modo que o título do PR vira o commit. A release `staging → main` usa merge commit.

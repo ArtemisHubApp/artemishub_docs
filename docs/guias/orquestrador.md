@@ -52,7 +52,7 @@ No macOS, use `python3` se `python` não existir. Quem usa o ChatGPT no navegado
 **SDD na medida da tarefa:** uma edição trivial vai direto; o resto passa por spec, plano, testes e revisão.
 </li>
 <li markdown>
-**PR para a `staging`** do repo da tarefa (nunca para o orquestrador), com `Closes #<nº>`, título no padrão Conventional Commits e **docs sempre atualizadas** ([ADR-009](../adr/009-higiene-github.md)).
+**PR para a `staging`** do repo da tarefa (nunca para o orquestrador), com `Closes #<nº>`, título no padrão Conventional Commits e **docs sempre atualizadas**, incluindo este site quando a mudança altera algo que ele descreve ([ADR-009](../adr/009-higiene-github.md)).
 </li>
 <li markdown>
 **Código limpo e camadas** (domínio, casos de uso e adaptadores), conferidos pelo CI ([ADR-010](../adr/010-codigo-limpo-hexagonal.md)).

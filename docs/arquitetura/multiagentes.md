@@ -16,61 +16,28 @@ A usuária fala com o Oráculo ou usa as telas. A API abre um trace no Langfuse 
 
 ```mermaid
 flowchart TB
-    subgraph APP["artemishub_frontend · React"]
-        TELAS[Dashboard · Oráculo · Network · Guild · Salário]
-    end
-    subgraph API["artemishub_backend · FastAPI"]
-        BE[rate limit · thread_id por conversa<br/>user_id pseudonimizado · abre o trace]
-    end
-    TELAS -- HTTPS · JWT --> BE
-    BE -. SSE streaming .-> TELAS
+    U([Usuária]) --> FE[artemishub_frontend<br/>React · Oráculo e telas]
+    FE -- HTTPS · JWT --> BE[artemishub_backend<br/>FastAPI · abre o trace]
 
-    subgraph GRAFO["artemishub_agents · LangGraph · estado tipado ArtemisState"]
-        G[Guardrail de entrada<br/>injeção · PII · fora de escopo]
-        S[Supervisor / Oráculo<br/>intenção em JSON · rota em código]
-        CTX[(Contexto da usuária<br/>perfil + plano, só leitura)]:::later
-        PERF[Perfil<br/>RF-02 a 05]:::later
-        SAL[Salarial<br/>ANALYSIS · RF-06 a 08]:::demo
-        DIR[Direitos<br/>RESEARCH · Lei 14.611, CLT]:::demo
-        OPO[Oportunidades<br/>RF-10 a 13]:::later
-        PLA[Plano<br/>RF-14 a 17]:::later
-        NEG[Negociação<br/>subgrafo · RF-09]:::later
-        VAL[Validação<br/>VALIDATION]:::demo
-        COM[Comunicação<br/>COMMUNICATION]:::demo
-        G --> S
-        CTX -.-> S
-        S -- "Send() em paralelo" --> PERF & SAL & DIR & OPO & PLA & NEG
-        PERF & SAL & DIR & OPO & PLA & NEG -- achados + citações --> VAL
-        VAL -- ok --> COM
-        VAL -. "falhou: refaz 1x ou abstém" .-> S
+    subgraph GRAFO["artemishub_agents · LangGraph"]
+        G[Guardrail de entrada<br/>injeção · PII · escopo] --> S[Supervisor<br/>intenção em JSON<br/>rota em código]
+        S --> SAL[Salarial<br/>Analysis]
+        S --> DIR[Direitos<br/>Research]
+        SAL --> VAL[Validação<br/>Validation]
+        DIR --> VAL
+        VAL -- ok --> COM[Comunicação<br/>Communication]
+        VAL -. falhou: refaz 1x .-> S
     end
+
     BE --> G
-    COM -. resposta .-> BE
-
-    subgraph DADOS["Ferramentas e dados (tools tipadas, só leitura)"]
-        RAG[(artemishub_rag<br/>Chroma + BM25 + RRF)]
-        RAIS[(RAIS STEM 2025<br/>medianas · DVC)]
-        CAT[(Catálogo de<br/>oportunidades)]
-        PG[(Perfil, plano e<br/>checkpoints · Postgres)]
-        LLM[(Gemini via API<br/>compatível OpenAI)]
-    end
-    DIR --> RAG
-    SAL --> RAIS
-    OPO --> CAT
-    PLA --> PG
-    GRAFO --> LLM
-
-    LF[[Langfuse<br/>traces · sessões · prompts · scores · datasets]]
-    API -. OTel .-> LF
-    GRAFO -. OTel .-> LF
-    DADOS -. OTel .-> LF
-
-    classDef demo stroke:#5b3fd0,stroke-width:2px
-    classDef later stroke-dasharray:5 4,opacity:0.6
-    class G,S demo
+    COM -- resposta via SSE --> BE
+    SAL --> RAIS[(RAIS STEM 2025<br/>medianas)]
+    DIR --> RAG[(artemishub_rag<br/>Chroma + BM25)]
+    GRAFO --> LLM[(Gemini<br/>API compatível OpenAI)]
+    GRAFO -. traces .-> LF[[Langfuse]]
 ```
 
-*Borda roxa: entra na demonstração de 20/11. Tracejado: próximas semanas.*
+Todos os nós do grafo acima entram na demonstração de 20/11. Nas próximas semanas, o Supervisor passa a despachar também para **Perfil**, **Oportunidades**, **Plano** e **Negociação** (subgrafo multi-turno), que usam o parser de CV, o catálogo de oportunidades e o Postgres (perfil, plano e checkpoints do grafo). Salarial e Direitos rodam em paralelo com `Send()`.
 
 ## Responsabilidades dos agentes
 

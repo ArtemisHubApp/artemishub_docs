@@ -13,7 +13,8 @@ Este guia descreve o que pode ser reproduzido hoje no `artemishub_agents`: o pre
 
 - Python 3.12 ou 3.13;
 - [uv](https://docs.astral.sh/uv/);
-- Git.
+- Git;
+- acesso ao remote DVC configurado para recuperar o dataset versionado, quando necessário.
 
 ## Instalação
 
@@ -25,9 +26,13 @@ uv sync --locked --dev
 
 ## Recuperar os dados versionados
 
-Os arquivos Parquet são controlados pelo DVC. A branch `main` ainda não define um remote em `.dvc/config`. Para recuperar o Parquet em outra máquina, é preciso ter acesso ao armazenamento do projeto, configurá-lo localmente e rodar `uv run dvc pull`. Também é possível reconstruir o dataset seguindo o [pipeline da RAIS](#pipeline-de-preparacao-da-rais).
+Os arquivos Parquet são controlados pelo DVC. Com o remote do projeto configurado:
 
-O Parquet nacional esperado é `data/processed/rais_stem_2025_brasil.parquet`. A consulta do próximo exemplo usa diretamente as tabelas de `data/agregados/`, já versionadas no Git.
+```bash
+dvc pull
+```
+
+O dataset nacional processado esperado é `data/processed/rais_stem_2025_brasil.parquet`. As tabelas agregadas usadas pela consulta ficam em `data/agregados/` e são versionadas no Git.
 
 ## Gerar as tabelas de consulta
 

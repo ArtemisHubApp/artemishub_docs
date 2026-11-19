@@ -28,7 +28,6 @@ flowchart LR
 | [artemishub_backend](https://github.com/ArtemisHubApp/artemishub_backend) | API, regras de negócio, autenticação e persistência |
 | [artemishub_agents](https://github.com/ArtemisHubApp/artemishub_agents) | Sistema multiagentes LLM, multimodalidade e modelos de ML |
 | [artemishub_rag](https://github.com/ArtemisHubApp/artemishub_rag) | Base de conhecimento, indexação e recuperação com citações |
-| [artemishub_orchestration](https://github.com/ArtemisHubApp/artemishub_orchestration) | Repo guarda-chuva: reúne os cinco como submódulos, guarda as regras para agentes de IA (`AGENTS.md`), as skills de SDD, os scripts e o CI compartilhado ([ADR-003](../adr/003-repo-orquestrador.md)) |
 
 ## Princípios do frontend
 

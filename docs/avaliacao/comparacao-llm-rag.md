@@ -1,5 +1,5 @@
 ---
-origem: "scripts/compare_llm_rag.py · scripts/judge_answers.py · issue #8 de artemishub_rag"
+origem: "scripts/compare_llm_rag.py · tests/test_compare_llm_rag.py · issue #8 de artemishub_rag"
 codigo: "github.com/ArtemisHubApp/artemishub_rag"
 ---
 
@@ -30,19 +30,17 @@ O parâmetro `--conjunto todos` executa os dois conjuntos. O holdout deve perman
 
 ## Execução
 
-No repositório `artemishub_rag`, instale as dependências, configure o provedor de LLM no `.env` e gere o índice seguindo o [guia de reprodução](../guias/reproduzir.md). Use saídas distintas para obter um resumo por conjunto, pois o juiz agrega as notas por condição dentro de cada arquivo.
+No repositório `artemishub_rag`, com as dependências instaladas e o arquivo `.env` configurado para o provedor de LLM:
 
 ```bash
-uv run python -m scripts.compare_llm_rag --conjunto desenvolvimento --saida reports/respostas-desenvolvimento.jsonl
-uv run python -m scripts.compare_llm_rag --conjunto holdout --saida reports/respostas-holdout.jsonl
-uv run python -m scripts.judge_answers --respostas reports/respostas-desenvolvimento.jsonl --saida reports/notas-desenvolvimento.jsonl
-uv run python -m scripts.judge_answers --respostas reports/respostas-holdout.jsonl --saida reports/notas-holdout.jsonl
+uv run python -m scripts.compare_llm_rag --conjunto desenvolvimento
+uv run python -m scripts.compare_llm_rag --conjunto holdout
 ```
 
 Para uma execução reduzida de teste:
 
 ```bash
-uv run python -m scripts.compare_llm_rag --conjunto desenvolvimento --limite 3 --saida reports/respostas-teste.jsonl
+uv run python -m scripts.compare_llm_rag --conjunto desenvolvimento --limite 3
 ```
 
 É possível selecionar condições específicas com `--condicoes llm_puro rag` e definir outro arquivo de saída com `--saida caminho/arquivo.jsonl`.
@@ -63,20 +61,6 @@ A execução grava linha a linha e pode ser retomada: respostas já concluídas 
 
 Se o validador de citações rejeitar uma resposta RAG, o texto bruto e o motivo da rejeição são preservados para análise; isso não deve ser contabilizado como uma resposta validada.
 
-## O que o juiz mede
-
-O juiz compara cada resposta com o gabarito versionado e registra nota, veredito e justificativa. As abstenções são classificadas conforme o comportamento esperado da pergunta. Defina `JUDGE_MODEL` no ambiente para usar um juiz diferente do modelo avaliado. Se a variável estiver ausente, o script usa `LLM_MODEL`.
-
-| Métrica do resumo | Interpretação |
-|---|---|
-| `acuracia` | Média da nota do conteúdo bruto nas perguntas respondíveis com nota |
-| `acuracia_com_validador` | Mesma média, atribuindo zero às respostas bloqueadas por citação |
-| `abstencao_indevida` | Proporção de abstenções nas perguntas respondíveis com nota |
-| `abstencao_correta` | Proporção de abstenções nas perguntas fora de escopo com nota |
-| `citacao_invalida` | Proporção de respostas barradas por citação entre as linhas com nota |
-
-Falhas técnicas sem nota ficam no JSONL, fora do resumo. Conte essas falhas ao informar a cobertura do experimento. O juiz mede acerto frente ao gabarito. A fidelidade aos trechos recuperados exige conferência das afirmações e de suas fontes.
-
 ## Como analisar e publicar os resultados
 
 A publicação final deve conter, no mínimo:
@@ -94,7 +78,6 @@ A publicação final deve conter, no mínimo:
 ## Referências de implementação
 
 - Script: [`scripts/compare_llm_rag.py`](https://github.com/ArtemisHubApp/artemishub_rag/blob/main/scripts/compare_llm_rag.py)
-- Juiz: [`scripts/judge_answers.py`](https://github.com/ArtemisHubApp/artemishub_rag/blob/main/scripts/judge_answers.py)
 - Testes: [`tests/test_compare_llm_rag.py`](https://github.com/ArtemisHubApp/artemishub_rag/blob/main/tests/test_compare_llm_rag.py)
 - Perguntas de desenvolvimento: [`evaluation/questions.jsonl`](https://github.com/ArtemisHubApp/artemishub_rag/blob/main/evaluation/questions.jsonl)
 - Holdout: [`evaluation/questions_holdout.jsonl`](https://github.com/ArtemisHubApp/artemishub_rag/blob/main/evaluation/questions_holdout.jsonl)

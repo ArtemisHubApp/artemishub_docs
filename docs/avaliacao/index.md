@@ -5,6 +5,11 @@ codigo: "src/evaluate.py · evaluation/ · docs/validation_report.md"
 
 # Avaliação
 
+A avaliação de recuperação do RAG é diferente da avaliação da resposta final. Recall@5 e MRR medem se a evidência foi recuperada e em que posição; não provam, sozinhos, que a resposta gerada é correta ou superior à de um LLM sem documentos.
+
+!!! info "Comparação entre estratégias"
+    O repositório `artemishub_rag` já possui script e testes para comparar LLM puro, LLM + CoT e RAG. A análise consolidada dos resultados ainda precisa ser publicada. Consulte [Comparação LLM, CoT e RAG](comparacao-llm-rag.md).
+
 Com 20 fontes, a página certa aparece entre os 5 primeiros trechos em **93,75%** das perguntas originais e **84,38%** do holdout, **acima da meta de 80%** definida no PDR. A ampliação de 5 para 20 fontes **piorou a posição da página certa no ranking (MRR)**, e essa perda está medida e explicada abaixo.
 
 <div class="art-metrics" markdown>
@@ -53,6 +58,10 @@ São **dois conjuntos de 16 perguntas** com gabarito de documento e página: o *
 - :material-file-chart-outline: **[Relatório de validação](relatorio-de-validacao.md)**
 
     A revisão pré-PR completa, com todos os experimentos.
+
+- :material-compare: **[Comparação LLM, CoT e RAG](comparacao-llm-rag.md)**
+
+    Desenho experimental, execução e resultados a consolidar.
 
 - :material-play-circle-outline: **[Relatório da demonstração](relatorio-da-demonstracao.md)**
 

@@ -5,15 +5,19 @@ codigo: "github.com/ArtemisHubApp"
 
 # Arquitetura
 
-Hoje é possível consultar a [base de conhecimento RAG](../rag/consulta.md) e explorar [estatísticas salariais da RAIS](consulta-salarial.md) por linha de comando. A base RAG busca evidências em fontes públicas e valida as citações da resposta. A ferramenta salarial consulta tabelas agregadas por ocupação, estado e sexo.
+O [protótipo multiagente](multiagentes.md) roda no terminal com LangGraph. O Orquestrador encaminha a pergunta para Pesquisa e/ou Análise. A Pesquisa recupera trechos de fontes públicas, a Análise reúne os dados da RAIS e as evidências em um rascunho, e a Validação verifica citações e valores antes de o Orquestrador formatar a resposta.
 
-O diagrama mostra como esses componentes deverão se integrar à interface web pelo backend e pelo grafo multiagente.
+Também é possível executar separadamente a [consulta ao RAG](../rag/consulta.md) e a [consulta salarial da RAIS](consulta-salarial.md). Para rodar a demonstração ou conversar com o protótipo, siga o [guia de reprodução](../guias/reproduzir.md#prototipo-multiagente).
+
+O diagrama mostra o protótipo e a integração prevista com a interface web e a API.
 
 ```mermaid
 flowchart LR
-    U([Usuária]) --> FE[artemishub_frontend<br/>Interface web]
-    FE --> BE[artemishub_backend<br/>API]
-    BE --> AG[artemishub_agents<br/>Multiagentes · LangGraph]
+    U([Usuária]) --> CLI[Terminal · demo e chat]
+    CLI --> AG[artemishub_agents<br/>Multiagentes · LangGraph]
+    U -.-> FE[Interface web · planejada]
+    FE -.-> BE[API · planejada]
+    BE -.-> AG
     AG --> RAG[artemishub_rag<br/>Base de conhecimento]
     AG --> LLM[(Gemini via API<br/>compatível OpenAI)]
     AG --> RAIS[(RAIS STEM 2025)]
@@ -44,7 +48,7 @@ flowchart LR
 
 ## Decisões de arquitetura (ADRs)
 
-As decisões ficam em [Decisões (ADRs)](../adr/index.md). O desenho do sistema multiagente prevê LangGraph e Langfuse ([ADR-002](../adr/002-framework-multiagente.md)); o desenho completo está em [Arquitetura multiagente](multiagentes.md). A stack do frontend continua "a definir pela equipe" (ADR-001).
+As decisões ficam em [Decisões (ADRs)](../adr/index.md). O sistema multiagente usa LangGraph e Langfuse ([ADR-002](../adr/002-framework-multiagente.md)); o desenho completo está em [Arquitetura multiagente](multiagentes.md). A stack do frontend continua "a definir pela equipe" (ADR-001).
 
 ## Próximos documentos previstos
 

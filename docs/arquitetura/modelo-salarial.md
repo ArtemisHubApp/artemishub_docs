@@ -70,7 +70,7 @@ diferença        = faixa_referência − faixa_mercado       → diferença por
 4. Registrar dados (DVC), parâmetros, métricas por grupo e o grupo de referência no MLflow.
 5. Expor como ferramenta `estimar_faixa(cbo, uf, escolaridade, experiencia)`, que devolve as duas faixas, a fonte, o ano da RAIS e os limites. O agente Salarial só explica esses números.
 
-A ferramenta que o agente Salarial deverá usar no protótipo é `src.salarios.consultar` do `artemishub_agents`: medianas, P25 e P75 por família da CBO × UF × sexo da RAIS STEM 2025, com recortes de pelo menos 30 vínculos.
+O agente de Análise já usa `src.salarios.consultar` do `artemishub_agents` para consultar medianas, P25 e P75 por família da CBO × UF × sexo da RAIS STEM 2025, com recortes de pelo menos 30 vínculos.
 
 ## Referências
 

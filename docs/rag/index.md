@@ -39,11 +39,11 @@ A tabela abaixo reúne os artefatos do RAG, com links para suas páginas nesta d
 | Artefato | Página | No repositório |
 |---|---|---|
 | Base de conhecimento e fontes documentais | [Fontes](fontes.md) | `config/sources.json`, `docs/base_de_conhecimento.md` |
-| Pipeline de ingestão de dados | [Pipeline de ingestão](pipeline.md) | `src/pipeline.py`, `src/ingest.py`, `src/quality.py` |
-| Estratégia de chunking | [Chunking](chunking.md) | `src/prepare.py` |
-| Estratégia de embeddings | [Embeddings e banco vetorial](embeddings.md) | `src/index.py` |
-| Banco vetorial | [Embeddings e banco vetorial](embeddings.md) | `src/index.py`, `.chroma/` (gerado) |
-| Consulta com recuperação | [Consulta e resposta](consulta.md) | `src/query.py`, `src/lexical.py` |
-| Resposta fundamentada e evidência das fontes | [Consulta e resposta](consulta.md) · [Demonstração](demonstracao.md) | `src/query.py`, `src/demo.py`, `reports/demo_rag.md` (anexo) |
+| Pipeline de ingestão de dados | [Pipeline de ingestão](pipeline.md) | `artemis_rag/pipeline.py`, `artemis_rag/ingest.py`, `artemis_rag/quality.py` |
+| Estratégia de chunking | [Chunking](chunking.md) | `artemis_rag/prepare.py` |
+| Estratégia de embeddings | [Embeddings e banco vetorial](embeddings.md) | `artemis_rag/index.py` |
+| Banco vetorial | [Embeddings e banco vetorial](embeddings.md) | `artemis_rag/index.py`, `.chroma/` (gerado) |
+| Consulta com recuperação | [Consulta e resposta](consulta.md) | `artemis_rag/query.py`, `artemis_rag/lexical.py` |
+| Resposta fundamentada e evidência das fontes | [Consulta e resposta](consulta.md) · [Demonstração](demonstracao.md) | `artemis_rag/query.py`, `artemis_rag/demo.py`, `reports/demo_rag.md` (anexo) |
 | Diagrama de arquitetura | [Arquitetura do RAG](../arquitetura/rag.md) | `docs/architecture.md` |
-| Avaliação da recuperação | [Avaliação](../avaliacao/index.md) | `src/evaluate.py`, `evaluation/`, `docs/validation_report.md` |
+| Avaliação da recuperação | [Avaliação](../avaliacao/index.md) | `artemis_rag/evaluate.py`, `evaluation/`, `docs/validation_report.md` |

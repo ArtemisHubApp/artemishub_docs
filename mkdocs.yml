@@ -147,6 +147,7 @@ nav:
           - ADR-008 Staging e worktrees: adr/008-staging-e-worktrees.md
           - ADR-009 Higiene do GitHub: adr/009-higiene-github.md
           - ADR-010 Código limpo e hexagonal: adr/010-codigo-limpo-hexagonal.md
+          - ADR-011 Orquestrador formata a resposta: adr/011-orquestrador-formata-resposta.md
   - Avaliação:
       - avaliacao/index.md
       - Limitações e próximos passos: avaliacao/limitacoes.md

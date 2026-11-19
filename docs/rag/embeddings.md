@@ -1,6 +1,6 @@
 ---
 origem: "Grupo 11 - Second Challenge - RAG (Relatório de Projeto, Semana 2) · seção Estratégia de embeddings e banco vetorial"
-codigo: "src/index.py · src/lexical.py"
+codigo: "artemis_rag/index.py · artemis_rag/lexical.py"
 ---
 
 # Embeddings e banco vetorial

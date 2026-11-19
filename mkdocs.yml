@@ -142,9 +142,11 @@ nav:
       - avaliacao/index.md
       - Limitações e próximos passos: avaliacao/limitacoes.md
       - Relatório de validação: avaliacao/relatorio-de-validacao.md
+      - Comparação LLM, CoT e RAG: avaliacao/comparacao-llm-rag.md
       - Relatório da demonstração: avaliacao/relatorio-da-demonstracao.md
   - Guias:
       - guias/reproduzir.md
+      - Reproduzir dados e consulta salarial: guias/reproduzir-agentes.md
       - Como trabalhamos (kanban): guias/kanban.md
   - Sobre:
       - sobre/roadmap.md

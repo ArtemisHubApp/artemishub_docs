@@ -5,11 +5,11 @@ codigo: "github.com/ArtemisHubApp/artemishub_agents"
 
 # Arquitetura multiagente
 
-Os agentes ficam no `artemishub_agents`, orquestrados com **LangGraph** (ver [ADR-002](../adr/002-framework-multiagente.md)). Eles usam o `artemishub_rag` e a base da RAIS como ferramentas e enviam traces ao **Langfuse**.
+O [ADR-002](../adr/002-framework-multiagente.md) define **LangGraph** e **Langfuse** para o desenho do sistema. Hoje o `artemishub_agents` oferece o preparo dos dados e a [consulta salarial da RAIS](consulta-salarial.md), e o RAG pode ser executado [de forma independente](../rag/consulta.md). O grafo multiagente, a interface web, a API e a telemetria descritos nesta página fazem parte da arquitetura planejada.
 
 A usuária fala com o Oráculo ou usa as telas. A API abre um trace no Langfuse e chama o grafo. O grafo filtra a entrada, roteia para um ou mais agentes especialistas, passa tudo pela validação e só então responde.
 
-!!! info "O que entra na demonstração de 20/11"
+!!! info "Escopo previsto para o protótipo"
     Guardrail, Supervisor, **Salarial** (Analysis), **Direitos** (Research), **Validação** (Validation) e **Comunicação** (Communication). Perfil, Oportunidades, Plano e Negociação entram nas próximas semanas.
 
 ## Diagrama da arquitetura
@@ -37,24 +37,24 @@ flowchart TB
     GRAFO -. traces .-> LF[[Langfuse]]
 ```
 
-Todos os nós do grafo acima entram na demonstração de 20/11. Nas próximas semanas, o Supervisor passa a despachar também para **Perfil**, **Oportunidades**, **Plano** e **Negociação** (subgrafo multi-turno), que usam o parser de CV, o catálogo de oportunidades e o Postgres (perfil, plano e checkpoints do grafo). Salarial e Direitos rodam em paralelo com `Send()`.
+O diagrama mostra os nós previstos para o protótipo. A expansão do Supervisor inclui **Perfil**, **Oportunidades**, **Plano** e **Negociação** (subgrafo multi-turno), que usam o parser de CV, o catálogo de oportunidades e o Postgres (perfil, plano e checkpoints do grafo). Salarial e Direitos rodam em paralelo com `Send()`.
 
 ## Responsabilidades dos agentes
 
 | Agente | Requisitos | Tela | Ferramentas | Usa LLM para |
 |---|---|---|---|---|
-| **Guardrail** · 20/11 | RNF-07, RNF-16, métrica de segurança | todas | regras + classificador pequeno | classificar injeção e escopo |
-| **Supervisor / Oráculo** · 20/11 | RNF-15 | Oráculo | nenhuma | extrair a intenção em JSON; a rota é um `if` |
+| **Guardrail** | RNF-07, RNF-16, métrica de segurança | todas | regras + classificador pequeno | classificar injeção e escopo |
+| **Supervisor / Oráculo** | RNF-15 | Oráculo | nenhuma | extrair a intenção em JSON; a rota é um `if` |
 | Perfil | RF-02 a RF-05 | Dashboard | parser de CV, perfil | extrair competências com trecho de evidência |
-| **Salarial** (Analysis Agent) · 20/11 | RF-06 a RF-08 | Salário | `src.salarios.consultar` (medianas da RAIS 2025); modelo salarial depois | explicar a faixa; nunca calcular números |
-| **Direitos** (Research Agent) · 20/11 | RNF-12, RNF-13 | Oráculo | RAG atual (`Retriever`) | responder com citações validadas |
+| **Salarial** (Analysis Agent) | RF-06 a RF-08 | Salário | `src.salarios.consultar` (medianas da RAIS 2025); modelo salarial depois | explicar a faixa; nunca calcular números |
+| **Direitos** (Research Agent) | RNF-12, RNF-13 | Oráculo | RAG atual (`Retriever`) | responder com citações validadas |
 | Oportunidades | RF-10 a RF-13 | Network, Guild | catálogo e filtros | justificar a compatibilidade |
 | Plano de carreira | RF-14 a RF-17 | Dashboard | perfil, catálogo, plano | propor ações a partir das lacunas |
 | Negociação | RF-09 | Salário | faixa do agente Salarial | fazer o papel do recrutador e dar feedback |
-| **Validação** (Validation Agent) · 20/11 | RNF-12 a RNF-15 | todas | validação de citações e juiz do `artemishub_rag` | checar se a resposta segue as evidências; reprovar e devolver 1x |
-| **Comunicação** (Communication Agent) · 20/11 | RNF-13, métrica 10.5 | todas | nenhuma | reescrever em linguagem simples sem perder citações |
+| **Validação** (Validation Agent) | RNF-12 a RNF-15 | todas | validação de citações e juiz do `artemishub_rag` | checar se a resposta segue as evidências; reprovar e devolver 1x |
+| **Comunicação** (Communication Agent) | RNF-13, métrica 10.5 | todas | nenhuma | reescrever em linguagem simples sem perder citações |
 
-## Fluxo da demonstração: "Estou ganhando o justo?"
+## Exemplo de fluxo proposto: "Estou ganhando o justo?"
 
 Os quatro papéis do enunciado (Research, Analysis, Validation e Communication) colaboram numa pergunta. Nesta versão o cargo, a UF e o salário vêm da própria pergunta; o agente Perfil entra depois.
 
@@ -94,7 +94,7 @@ sequenceDiagram
 4. **Validação** confere se toda afirmação tem fonte e se as limitações aparecem (emprego formal, diferença bruta). Se reprovar, devolve uma vez; na segunda falha, o sistema se abstém.
 5. **Comunicação** separa fato verificado de sugestão, usa linguagem simples e lista as fontes no fim.
 
-## Segurança: nenhum agente obedece texto externo
+## Controles de segurança previstos
 
 <div class="grid cards" markdown>
 
@@ -116,7 +116,7 @@ sequenceDiagram
 
 </div>
 
-## Observabilidade com Langfuse
+## Observabilidade prevista com Langfuse
 
 | Recurso | Uso no Artemis |
 |---|---|
@@ -128,6 +128,8 @@ sequenceDiagram
 | Latência e custo | alerta se p95 > 10 s (meta do PDR 10.3) |
 | Equidade | scores por recorte agregado (RNF-14) |
 | Privacidade | `mask()` remove PII antes de enviar (RNF-16) |
+
+O trecho abaixo ilustra a configuração proposta do grafo.
 
 ```python
 from langfuse import get_client
@@ -162,11 +164,3 @@ result = app.invoke(
 ```
 
 O nó de Direitos reaproveita o `Retriever` e a validação de citações de `src/query.py` sem mudar o RAG.
-
-## Ordem de implementação
-
-1. **Até 20/11:** ADR do framework (este repositório), remote do DVC configurado e tabela de medianas por família CBO × UF × sexo versionada no git.
-2. **Até 20/11:** pacote do RAG renomeado para poder ser importado pelo `artemishub_agents` (os dois repositórios usam `src`).
-3. **Até 20/11:** grafo da demo (Guardrail, Supervisor, Salarial, Direitos, Validação e Comunicação) com testes por nó e `reports/demo_multiagente.md` para o Teams.
-4. Langfuse instrumentando o grafo; datasets de avaliação e de injeção no CI.
-5. [Modelo salarial](modelo-salarial.md) no lugar das medianas; agente Perfil; subgrafo de Negociação; Oportunidades e Plano.

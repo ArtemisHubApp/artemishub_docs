@@ -5,7 +5,13 @@ codigo: "src/query.py · src/lexical.py"
 
 # Consulta e resposta
 
-A pergunta passa por **busca híbrida** e volta com os **5 trechos mais relevantes**; o Gemini (`gemini-3.5-flash-lite`, temperatura 0) responde **só com eles**, e a resposta só é exibida se **todo parágrafo citar uma fonte recuperada**. Sem evidência, o sistema responde: *"Não encontrei evidência suficiente na base para responder."*
+Por padrão, a busca híbrida seleciona até **5 trechos**. O modelo configurado recebe a instrução de responder com base neles e citar as fontes. O validador verifica o formato e se os identificadores citados correspondem aos trechos recuperados. A conferência de que cada fonte sustenta a afirmação é uma etapa da [avaliação](../avaliacao/index.md).
+
+Quando falta evidência, o sistema pode se abster. Uma resposta com citação inválida é bloqueada. Para testar a consulta localmente, siga o [guia de reprodução](../guias/reproduzir.md) e execute:
+
+```bash
+uv run python -m src.query "Quais empresas precisam publicar o relatório de transparência salarial?"
+```
 
 ## Etapas da consulta
 

@@ -23,10 +23,11 @@ A busca é **híbrida** (vetorial e BM25) sobre **1.209 chunks** indexados no Ch
 flowchart LR
     Q([Pergunta]) --> H[Busca híbrida<br/>vetorial top 20 + BM25 top 20]
     H --> F[Fusão RRF<br/>páginas distintas]
-    F --> G[Geração<br/>Gemini · temperatura 0]
+    F --> G[Geração com trechos recuperados]
+    G -->|sem evidência| A([Abstenção])
     G --> V{Validação<br/>das citações}
     V -->|todo parágrafo cita<br/>fonte recuperada| R([Resposta citada<br/>URL + página])
-    V -->|sem evidência| A([Abstenção])
+    V -->|citação inválida| B([Resposta bloqueada])
 ```
 
 Sem evidência, o sistema responde: *"Não encontrei evidência suficiente na base para responder."*

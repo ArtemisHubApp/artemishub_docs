@@ -5,7 +5,9 @@ codigo: "github.com/ArtemisHubApp"
 
 # Arquitetura
 
-O Artemis é dividido em **cinco repositórios**, cada um com uma responsabilidade clara.
+Hoje é possível consultar a [base de conhecimento RAG](../rag/consulta.md) e explorar [estatísticas salariais da RAIS](consulta-salarial.md) por linha de comando. A base RAG busca evidências em fontes públicas e valida as citações da resposta. A ferramenta salarial consulta tabelas agregadas por ocupação, estado e sexo.
+
+O diagrama mostra como esses componentes deverão se integrar à interface web pelo backend e pelo grafo multiagente.
 
 ```mermaid
 flowchart LR
@@ -42,7 +44,7 @@ flowchart LR
 
 ## Decisões de arquitetura (ADRs)
 
-As decisões ficam em [Decisões (ADRs)](../adr/index.md). O sistema multiagente usa LangGraph e Langfuse ([ADR-002](../adr/002-framework-multiagente.md)); o desenho completo está em [Arquitetura multiagente](multiagentes.md). A stack do frontend continua "a definir pela equipe" (ADR-001).
+As decisões ficam em [Decisões (ADRs)](../adr/index.md). O desenho do sistema multiagente prevê LangGraph e Langfuse ([ADR-002](../adr/002-framework-multiagente.md)); o desenho completo está em [Arquitetura multiagente](multiagentes.md). A stack do frontend continua "a definir pela equipe" (ADR-001).
 
 ## Próximos documentos previstos
 

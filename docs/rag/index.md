@@ -23,10 +23,11 @@ A busca é **híbrida** (vetorial e BM25) sobre **1.209 chunks** indexados no Ch
 flowchart LR
     Q([Pergunta]) --> H[Busca híbrida<br/>vetorial top 20 + BM25 top 20]
     H --> F[Fusão RRF<br/>páginas distintas]
-    F --> G[Geração<br/>Gemini · temperatura 0]
+    F --> G[Geração com trechos recuperados]
+    G -->|sem evidência| A([Abstenção])
     G --> V{Validação<br/>das citações}
     V -->|todo parágrafo cita<br/>fonte recuperada| R([Resposta citada<br/>URL + página])
-    V -->|sem evidência| A([Abstenção])
+    V -->|citação inválida| B([Resposta bloqueada])
 ```
 
 Sem evidência, o sistema responde: *"Não encontrei evidência suficiente na base para responder."*
@@ -38,11 +39,11 @@ A tabela abaixo reúne os artefatos do RAG, com links para suas páginas nesta d
 | Artefato | Página | No repositório |
 |---|---|---|
 | Base de conhecimento e fontes documentais | [Fontes](fontes.md) | `config/sources.json`, `docs/base_de_conhecimento.md` |
-| Pipeline de ingestão de dados | [Pipeline de ingestão](pipeline.md) | `src/pipeline.py`, `src/ingest.py`, `src/quality.py` |
-| Estratégia de chunking | [Chunking](chunking.md) | `src/prepare.py` |
-| Estratégia de embeddings | [Embeddings e banco vetorial](embeddings.md) | `src/index.py` |
-| Banco vetorial | [Embeddings e banco vetorial](embeddings.md) | `src/index.py`, `.chroma/` (gerado) |
-| Consulta com recuperação | [Consulta e resposta](consulta.md) | `src/query.py`, `src/lexical.py` |
-| Resposta fundamentada e evidência das fontes | [Consulta e resposta](consulta.md) · [Demonstração](demonstracao.md) | `src/query.py`, `src/demo.py`, `reports/demo_rag.md` (anexo) |
+| Pipeline de ingestão de dados | [Pipeline de ingestão](pipeline.md) | `artemis_rag/pipeline.py`, `artemis_rag/ingest.py`, `artemis_rag/quality.py` |
+| Estratégia de chunking | [Chunking](chunking.md) | `artemis_rag/prepare.py` |
+| Estratégia de embeddings | [Embeddings e banco vetorial](embeddings.md) | `artemis_rag/index.py` |
+| Banco vetorial | [Embeddings e banco vetorial](embeddings.md) | `artemis_rag/index.py`, `.chroma/` (gerado) |
+| Consulta com recuperação | [Consulta e resposta](consulta.md) | `artemis_rag/query.py`, `artemis_rag/lexical.py` |
+| Resposta fundamentada e evidência das fontes | [Consulta e resposta](consulta.md) · [Demonstração](demonstracao.md) | `artemis_rag/query.py`, `artemis_rag/demo.py`, `reports/demo_rag.md` (anexo) |
 | Diagrama de arquitetura | [Arquitetura do RAG](../arquitetura/rag.md) | `docs/architecture.md` |
-| Avaliação da recuperação | [Avaliação](../avaliacao/index.md) | `src/evaluate.py`, `evaluation/`, `docs/validation_report.md` |
+| Avaliação da recuperação | [Avaliação](../avaliacao/index.md) | `artemis_rag/evaluate.py`, `evaluation/`, `docs/validation_report.md` |

@@ -5,14 +5,19 @@ codigo: "github.com/ArtemisHubApp/artemishub_agents"
 
 # Arquitetura multiagente
 
-Os agentes ficam no `artemishub_agents`, orquestrados com **LangGraph** (ver [ADR-002](../adr/002-framework-multiagente.md)). Eles usam o `artemishub_rag` e a base da RAIS como ferramentas e enviam traces ao **Langfuse**.
+Esta página descreve a **arquitetura-alvo** proposta no ADR-002, não um sistema multiagente já executável.
 
-A usuária fala com o Oráculo ou usa as telas. A API abre um trace no Langfuse e chama o grafo. O grafo filtra a entrada, roteia para um ou mais agentes especialistas, passa tudo pela validação e só então responde.
+!!! warning "Estado da implementação em 19/11/2026"
+    A branch main de `artemishub_agents` contém o dataset RAIS STEM 2025, tabelas agregadas, ferramenta de consulta salarial, configuração com uv/Ruff/pytest e workflow de CI. Não foi localizado o pacote de agentes/grafo nem um executor de demonstração correspondente. Assim, Guardrail, Supervisor, Research, Analysis, Validation e Communication permanecem como desenho/escopo até que código, testes e execução reproduzível sejam incorporados.
+
+    O ADR-002 registra a escolha técnica de LangGraph e Langfuse, mas ainda aparece como **proposto** e aguardando aprovação. Não tratar a decisão como formalmente concluída antes dessa aprovação.
+
+A arquitetura proposta prevê integração com `artemishub_rag`, dados da RAIS, backend/frontend e observabilidade via Langfuse. O fluxo ponta a ponta ainda precisa ser comprovado nos repositórios.
 
 !!! info "O que entra na demonstração de 20/11"
     Guardrail, Supervisor, **Salarial** (Analysis), **Direitos** (Research), **Validação** (Validation) e **Comunicação** (Communication). Perfil, Oportunidades, Plano e Negociação entram nas próximas semanas.
 
-## Diagrama da arquitetura
+## Diagrama da arquitetura-alvo
 
 ```mermaid
 flowchart TB
@@ -37,7 +42,7 @@ flowchart TB
     GRAFO -. traces .-> LF[[Langfuse]]
 ```
 
-Todos os nós do grafo acima entram na demonstração de 20/11. Nas próximas semanas, o Supervisor passa a despachar também para **Perfil**, **Oportunidades**, **Plano** e **Negociação** (subgrafo multi-turno), que usam o parser de CV, o catálogo de oportunidades e o Postgres (perfil, plano e checkpoints do grafo). Salarial e Direitos rodam em paralelo com `Send()`.
+O diagrama é uma referência de integração, não um diagrama de componentes atualmente executáveis. A consulta salarial que pode ser executada hoje está descrita em [Modelo salarial](modelo-salarial.md) e [Guia de reprodução dos agentes](../guias/reproduzir-agentes.md).
 
 ## Responsabilidades dos agentes
 
@@ -54,7 +59,7 @@ Todos os nós do grafo acima entram na demonstração de 20/11. Nas próximas se
 | **Validação** (Validation Agent) · 20/11 | RNF-12 a RNF-15 | todas | validação de citações e juiz do `artemishub_rag` | checar se a resposta segue as evidências; reprovar e devolver 1x |
 | **Comunicação** (Communication Agent) · 20/11 | RNF-13, métrica 10.5 | todas | nenhuma | reescrever em linguagem simples sem perder citações |
 
-## Fluxo da demonstração: "Estou ganhando o justo?"
+## Fluxo multiagente pretendido: "Estou ganhando o justo?"
 
 Os quatro papéis do enunciado (Research, Analysis, Validation e Communication) colaboram numa pergunta. Nesta versão o cargo, a UF e o salário vêm da própria pergunta; o agente Perfil entra depois.
 
@@ -163,10 +168,11 @@ result = app.invoke(
 
 O nó de Direitos reaproveita o `Retriever` e a validação de citações de `src/query.py` sem mudar o RAG.
 
-## Ordem de implementação
+## Próximas etapas de implementação
 
-1. **Até 20/11:** ADR do framework (este repositório), remote do DVC configurado e tabela de medianas por família CBO × UF × sexo versionada no git.
-2. **Até 20/11:** pacote do RAG renomeado para poder ser importado pelo `artemishub_agents` (os dois repositórios usam `src`).
-3. **Até 20/11:** grafo da demo (Guardrail, Supervisor, Salarial, Direitos, Validação e Comunicação) com testes por nó e `reports/demo_multiagente.md` para o Teams.
-4. Langfuse instrumentando o grafo; datasets de avaliação e de injeção no CI.
-5. [Modelo salarial](modelo-salarial.md) no lugar das medianas; agente Perfil; subgrafo de Negociação; Oportunidades e Plano.
+1. Implementar o grafo e os nós com testes isolados.
+2. Integrar a ferramenta salarial existente e o Retriever do RAG por contratos explícitos.
+3. Criar executor de demonstração e registrar uma execução real com entradas, saídas, citações e limitações.
+4. Instrumentar o grafo com Langfuse e validar mascaramento de dados pessoais.
+5. Expor a orquestração como API e validar o contrato com backend/frontend.
+6. Atualizar o status desta página somente após existir código, testes e demonstração reproduzível.

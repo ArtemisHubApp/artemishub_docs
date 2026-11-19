@@ -138,7 +138,7 @@ graph = StateGraph(ArtemisState)
 graph.add_node("guardrail", guardrail_node)
 graph.add_node("supervisor", supervisor_node)
 graph.add_node("salarial", salary_agent)      # chama a consulta salarial via porta
-graph.add_node("direitos", rights_agent)      # chama src.query.Retriever
+graph.add_node("direitos", rights_agent)      # chama artemis_rag.buscar (API pública do RAG)
 graph.add_node("validacao", validation_node)
 graph.add_node("comunicacao", communication_node)
 graph.add_edge(START, "guardrail")

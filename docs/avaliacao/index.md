@@ -16,7 +16,7 @@ Com 20 fontes, a página certa aparece entre os 5 primeiros trechos em **93,75%*
 
 ## Como medimos
 
-São **dois conjuntos de 16 perguntas** com gabarito de documento e página: o **original**, usado no desenvolvimento, e o **holdout**, nunca usado para ajustar nada. As métricas são por página, no top 5 (`python -m src.evaluate`).
+São **dois conjuntos de 16 perguntas** com gabarito de documento e página: o **original**, usado no desenvolvimento, e o **holdout**, nunca usado para ajustar nada. As métricas são por página, no top 5 (`python -m artemis_rag.evaluate`).
 
 ## Métricas de recuperação por página (top 5)
 

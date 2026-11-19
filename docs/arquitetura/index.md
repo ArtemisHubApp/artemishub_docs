@@ -41,7 +41,11 @@ flowchart LR
 
 ## Decisões de arquitetura (ADRs)
 
-As decisões ficam em [Decisões (ADRs)](../adr/index.md). O sistema multiagente usa LangGraph e Langfuse ([ADR-002](../adr/002-framework-multiagente.md)); o desenho completo está em [Arquitetura multiagente](multiagentes.md). A stack do frontend continua "a definir pela equipe" (ADR-001).
+As decisões ficam em [Decisões (ADRs)](../adr/index.md). O ADR-002 propõe LangGraph e Langfuse, mas ainda consta como aguardando aprovação. A página [Arquitetura multiagente](multiagentes.md) separa o desenho-alvo da implementação efetivamente encontrada nos repositórios. O frontend e o backend ainda descrevem stack e execução como pendentes em seus READMEs.
+
+## Estado da implementação
+
+A consulta descritiva à RAIS 2025 e o pipeline RAG são os componentes com código e instruções de reprodução identificados. O grafo multiagente, o modelo preditivo salarial e a integração ponta a ponta frontend/backend/agentes ainda precisam de implementação e evidências reproduzíveis. Consulte o [roadmap](../sobre/roadmap.md) para o inventário de lacunas.
 
 ## Próximos documentos previstos
 

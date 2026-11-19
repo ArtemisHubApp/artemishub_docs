@@ -7,6 +7,12 @@ codigo: "github.com/ArtemisHubApp/artemishub_agents"
 
 Uma referência que não repete a desigualdade.
 
+!!! success "Implementado: consulta descritiva"
+    O repositório `artemishub_agents` contém o dataset RAIS STEM 2025 processado (2.478.804 vínculos) e a ferramenta `src.salarios`, que gera e consulta P25/P50/P75 por família CBO × UF × sexo. Os recortes exigem ao menos 30 vínculos. A consulta calcula a diferença bruta entre medianas e compara, opcionalmente, um salário informado.
+
+!!! warning "Ainda não comprovado: modelo preditivo"
+    A regressão por quantis, faixa de referência contrafactual, calibração conformal, registro de experimentos no MLflow e avaliação de equidade descritos nesta página são **proposta de arquitetura**, não resultados implementados e medidos na branch `main` consultada em 19/11/2026. Não foi localizado modelo treinado nem relatório com MAE/MAPE/R², cobertura ou métricas de equidade. Os critérios abaixo são metas a validar, não resultados atingidos.
+
 A estimativa vem de uma regressão clássica treinada na RAIS. O problema é que o salário histórico já carrega a diferença de gênero e raça. Um modelo treinado nele, do jeito que ele é, aprende a pagar menos às mulheres. Tirar sexo e raça das variáveis não resolve: a diferença continua chegando ao modelo pela ocupação, pelo setor e pela jornada, só que sem aparecer.
 
 A proposta é incluir sexo e raça no treino para separar o efeito deles do efeito do perfil, e fixá-los num grupo de referência na hora de prever. É a lógica da decomposição de Oaxaca-Blinder, usada na economia do trabalho para medir diferença salarial.
@@ -27,7 +33,7 @@ diferença        = faixa_referência − faixa_mercado       → diferença por
 
     Salário informado: **8,3**, ou seja, **14% abaixo** da mediana de referência.
 
-    Números inventados para mostrar o formato da tela Salário. Os valores reais saem do modelo treinado na RAIS.
+    Números fictícios para ilustrar a proposta. Não são previsões nem resultados de um modelo treinado.
 
 ## Decisões
 
@@ -62,7 +68,7 @@ diferença        = faixa_referência − faixa_mercado       → diferença por
 !!! warning "Pendente"
     O grupo de referência (homens de todas as raças ou homens brancos) ainda não foi escolhido.
 
-## Preparo da RAIS
+## Proposta de preparo e treinamento da RAIS
 
 1. Filtrar CBOs de STEM e remover vínculos abandonados (dados de 2024 em diante) e jornadas zeradas.
 2. Calcular salário por hora e corrigir pelo IPCA para o mês de referência exibido na tela.
@@ -70,7 +76,9 @@ diferença        = faixa_referência − faixa_mercado       → diferença por
 4. Registrar dados (DVC), parâmetros, métricas por grupo e o grupo de referência no MLflow.
 5. Expor como ferramenta `estimar_faixa(cbo, uf, escolaridade, experiencia)`, que devolve as duas faixas, a fonte, o ano da RAIS e os limites. O agente Salarial só explica esses números.
 
-Até o modelo ficar pronto, o agente Salarial usa `src.salarios.consultar` do `artemishub_agents`: medianas, P25 e P75 por família da CBO × UF × sexo da RAIS STEM 2025, com recortes de pelo menos 30 vínculos.
+**Implementado hoje:** `src.salarios` consulta tabelas agregadas de remuneração mensal da RAIS 2025, por família CBO × UF × sexo. A tabela publica P25, P50 e P75, n de vínculos e mediana para jornada de pelo menos 40 horas quando há amostra suficiente. Recortes com menos de 30 vínculos são descartados; se o recorte estadual não tiver mulheres e homens suficientes, a ferramenta tenta o Brasil e informa essa substituição. A diferença entre medianas é bruta e não controla escolaridade, tempo de emprego, porte ou jornada.
+
+Para reproduzir: `uv run python -m src.salarios gerar --ano 2025` e `uv run python -m src.salarios consultar --ocupacao "analista de sistemas" --uf DF --salario 7500`. Veja o [guia de reprodução](../guias/reproduzir-agentes.md) e o [dicionário RAIS](https://github.com/ArtemisHubApp/artemishub_agents/blob/main/docs/dicionario_dados_rais.md).
 
 ## Referências
 

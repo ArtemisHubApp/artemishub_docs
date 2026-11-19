@@ -42,6 +42,7 @@ flowchart LR
 | [artemishub_backend](https://github.com/ArtemisHubApp/artemishub_backend) | API, regras de negócio, autenticação e persistência |
 | [artemishub_agents](https://github.com/ArtemisHubApp/artemishub_agents) | Sistema multiagentes LLM, multimodalidade e modelos de ML |
 | [artemishub_rag](https://github.com/ArtemisHubApp/artemishub_rag) | Base de conhecimento, indexação e recuperação com citações |
+| [artemishub_orchestration](https://github.com/ArtemisHubApp/artemishub_orchestration) | Orquestrador de SDD: reúne os repos como submódulos, regras para agentes de IA (`AGENTS.md`), skills, scripts e CI compartilhado |
 
 ## 🗓️ Roadmap
 

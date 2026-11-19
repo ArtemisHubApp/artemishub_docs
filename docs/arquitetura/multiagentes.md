@@ -10,7 +10,7 @@ Os agentes ficam no `artemishub_agents`, orquestrados com **LangGraph** (ver [AD
 A usuária fala com o Oráculo ou usa as telas. A API abre um trace no Langfuse e chama o grafo. O grafo filtra a entrada, roteia para um ou mais agentes especialistas, passa tudo pela validação e só então responde.
 
 !!! info "O que entra na demonstração de 20/11"
-    Guardrail, Supervisor, **Salarial** (Analysis), **Direitos** (Research), **Validação** (Validation) e **Comunicação** (Communication). Perfil, Oportunidades, Plano e Negociação entram nas próximas semanas.
+    **Orquestrador** (guardrail, intenção e resposta final), **Pesquisa** (Research), **Análise** (Analysis) e **Validação** (Validation). O agente de Comunicação saiu do desenho em 19/11: o Orquestrador formata a resposta, sem mais uma chamada ao LLM ([ADR-011](../adr/011-orquestrador-formata-resposta.md)). Perfil, Oportunidades, Plano e Negociação entram nas próximas semanas.
 
 ## Diagrama da arquitetura
 
@@ -20,79 +20,75 @@ flowchart TB
     FE -- HTTPS · JWT --> BE[artemishub_backend<br/>FastAPI · abre o trace]
 
     subgraph GRAFO["artemishub_agents · LangGraph"]
-        G[Guardrail de entrada<br/>injeção · PII · escopo] --> S[Supervisor<br/>intenção em JSON<br/>rota em código]
-        S --> SAL[Salarial<br/>Analysis]
-        S --> DIR[Direitos<br/>Research]
-        SAL --> VAL[Validação<br/>Validation]
-        DIR --> VAL
-        VAL -- ok --> COM[Comunicação<br/>Communication]
-        VAL -. falhou: refaz 1x .-> S
+        ORQ[Orquestrador<br/>guardrail · intenção<br/>rota em código] --> DIR[Pesquisa<br/>Research]
+        ORQ --> DAD[Análise · dados<br/>Analysis]
+        DIR --> SIN[Análise · síntese<br/>única chamada ao LLM]
+        DAD --> SIN
+        SIN --> VAL[Validação<br/>Validation · regras]
+        VAL -. reprovou: refaz 1x .-> SIN
+        VAL -- aprovou --> FMT[Orquestrador<br/>formata a resposta<br/>sem LLM]
     end
 
-    BE --> G
-    COM -- resposta via SSE --> BE
-    SAL --> RAIS[(RAIS STEM 2025<br/>medianas)]
+    BE --> ORQ
+    FMT -- resposta --> BE
+    DAD --> RAIS[(RAIS STEM 2025<br/>medianas)]
     DIR --> RAG[(artemishub_rag<br/>Chroma + BM25)]
-    GRAFO --> LLM[(Gemini<br/>API compatível OpenAI)]
+    SIN --> LLM[(Gemini<br/>API compatível OpenAI)]
     GRAFO -. traces .-> LF[[Langfuse]]
 ```
 
-Todos os nós do grafo acima entram na demonstração de 20/11. Nas próximas semanas, o Supervisor passa a despachar também para **Perfil**, **Oportunidades**, **Plano** e **Negociação** (subgrafo multi-turno), que usam o parser de CV, o catálogo de oportunidades e o Postgres (perfil, plano e checkpoints do grafo). Salarial e Direitos rodam em paralelo com `Send()`.
+Todos os nós do grafo acima entram na demonstração de 20/11; o frontend e o backend ainda não (a demo roda pela linha de comando). Nas próximas semanas, o Orquestrador passa a despachar também para **Perfil**, **Oportunidades**, **Plano** e **Negociação** (subgrafo multi-turno), que usam o parser de CV, o catálogo de oportunidades e o Postgres (perfil, plano e checkpoints do grafo). Pesquisa e Análise (dados) rodam em paralelo no mesmo passo do grafo.
 
 ## Responsabilidades dos agentes
 
 | Agente | Requisitos | Tela | Ferramentas | Usa LLM para |
 |---|---|---|---|---|
-| **Guardrail** · 20/11 | RNF-07, RNF-16, métrica de segurança | todas | regras + classificador pequeno | classificar injeção e escopo |
-| **Supervisor / Oráculo** · 20/11 | RNF-15 | Oráculo | nenhuma | extrair a intenção em JSON; a rota é um `if` |
+| **Orquestrador / Oráculo** · 20/11 | RNF-07, RNF-15, RNF-16, métrica de segurança | todas | regras de guardrail e de intenção, `buscar_ocupacao` | nada: guardrail, intenção, rota e formatação da resposta final são código |
 | Perfil | RF-02 a RF-05 | Dashboard | parser de CV, perfil | extrair competências com trecho de evidência |
-| **Salarial** (Analysis Agent) · 20/11 | RF-06 a RF-08 | Salário | `src.salarios.consultar` (medianas da RAIS 2025); modelo salarial depois | explicar a faixa; nunca calcular números |
-| **Direitos** (Research Agent) · 20/11 | RNF-12, RNF-13 | Oráculo | RAG atual (`Retriever`) | responder com citações validadas |
+| **Análise** (Analysis Agent) · 20/11 | RF-06 a RF-08 | Salário | `src.salarios.consultar` (medianas da RAIS 2025); modelo salarial depois | escrever o rascunho em linguagem simples com os números prontos; nunca calcular |
+| **Pesquisa** (Research Agent) · 20/11 | RNF-12, RNF-13 | Oráculo | RAG atual (`Retriever`) | nada: devolve trechos com citação |
 | Oportunidades | RF-10 a RF-13 | Network, Guild | catálogo e filtros | justificar a compatibilidade |
 | Plano de carreira | RF-14 a RF-17 | Dashboard | perfil, catálogo, plano | propor ações a partir das lacunas |
-| Negociação | RF-09 | Salário | faixa do agente Salarial | fazer o papel do recrutador e dar feedback |
-| **Validação** (Validation Agent) · 20/11 | RNF-12 a RNF-15 | todas | validação de citações e juiz do `artemishub_rag` | checar se a resposta segue as evidências; reprovar e devolver 1x |
-| **Comunicação** (Communication Agent) · 20/11 | RNF-13, métrica 10.5 | todas | nenhuma | reescrever em linguagem simples sem perder citações |
+| Negociação | RF-09 | Salário | faixa do agente de Análise | fazer o papel do recrutador e dar feedback |
+| **Validação** (Validation Agent) · 20/11 | RNF-12 a RNF-15 | todas | regras: citação existe, todo parágrafo citado, todo valor veio da RAIS ou da evidência, aviso de diferença bruta | nada; reprova com o motivo exato e devolve 1x (o juiz por LLM entra depois) |
 
-## Fluxo da demonstração: "Estou ganhando o justo?"
+## Fluxo da demonstração: "Quanto ganha e quais são meus direitos?"
 
-Os quatro papéis do enunciado (Research, Analysis, Validation e Communication) colaboram numa pergunta. Nesta versão o cargo, a UF e o salário vêm da própria pergunta; o agente Perfil entra depois.
+Pesquisa, Análise e Validação colaboram numa pergunta, e o Orquestrador entrega a resposta. Nesta versão o cargo, a UF e o salário vêm da própria pergunta; o agente Perfil entra depois.
 
 ```mermaid
 sequenceDiagram
     autonumber
     participant U as Usuária (Oráculo)
-    participant G as Guardrail
-    participant S as Supervisor
-    participant SA as Salarial (Analysis)
-    participant D as Direitos (Research)
+    participant O as Orquestrador
+    participant D as Pesquisa (Research)
+    participant A as Análise (Analysis)
     participant V as Validação
-    participant C as Comunicação
-    U->>G: "Sou analista de sistemas em SP e ganho R$ 7.500. Está justo?"
-    G->>S: texto limpo + flags
-    S->>S: intenção = comparar_salario, extrai cargo, UF e salário
+    U->>O: "Quanto ganha uma analista de sistemas no DF, qual a diferença para homens e quais são meus direitos?"
+    O->>O: guardrail; intenção = salário + direitos; CBO 2124, UF DF (regras, sem LLM)
     par em paralelo
-        S->>SA: consultar(família CBO 2124, SP, 7500)
-        SA-->>S: mediana, P25–P75 e diferença bruta M/H (RAIS 2025)
+        O->>A: consultar(família CBO 2124, DF)
+        A-->>O: mediana, P25–P75 e diferença bruta M/H (RAIS 2025)
     and
-        S->>D: buscar("igualdade salarial mesma função")
-        D-->>S: trechos com citação (Lei 14.611, CLT art. 461)
+        O->>D: buscar("igualdade salarial mesma função")
+        D-->>O: trechos com citação (Lei 14.611, cartilha)
     end
-    S->>V: achados + números + citações
+    O->>A: sintetizar(números + evidências) — 1 chamada ao LLM
+    A-->>O: rascunho com [RAIS] e [FONTE N]
+    O->>V: validar(rascunho, números, evidências)
     alt reprovado
-        V-->>S: falta fonte ou aviso de diferença bruta, refaz 1x
+        V-->>O: motivo exato (ex.: valor sem fonte); a Análise refaz 1x
     end
-    V->>C: rascunho aprovado
-    C-->>U: posição frente à mediana, limites dos dados, direitos e próximo passo
+    O-->>U: texto aprovado + limites dos dados + fontes (template, sem LLM)
 ```
 
 ### Como os agentes colaboram
 
-1. **Guardrail** limpa o texto, marca PII e recusa pedidos fora de escopo ou com tentativa de injeção.
-2. **Supervisor** devolve só um JSON de intenção, validado por schema. Uma função Python escolhe os agentes.
-3. **Salarial** e **Direitos** rodam em paralelo (`Send()`). Cada um escreve só no seu campo do estado: números com fonte, e trechos com citação.
-4. **Validação** confere se toda afirmação tem fonte e se as limitações aparecem (emprego formal, diferença bruta). Se reprovar, devolve uma vez; na segunda falha, o sistema se abstém.
-5. **Comunicação** separa fato verificado de sugestão, usa linguagem simples e lista as fontes no fim.
+1. **Orquestrador** recusa pergunta vazia, longa demais, fora de escopo ou com tentativa de injeção, e lê a intenção, a ocupação, a UF e o salário com regras (sem LLM). Uma função Python escolhe os agentes.
+2. **Pesquisa** e **Análise (dados)** rodam em paralelo. Cada uma escreve só no seu campo do estado: trechos com citação, e números com fonte.
+3. **Análise (síntese)** escreve o rascunho com os números já formatados, em linguagem simples. É a única chamada ao LLM; sem LLM configurado, usa um rascunho padrão.
+4. **Validação** confere se toda citação existe, se todo parágrafo tem fonte, se todo valor veio da RAIS ou da evidência e se o aviso de diferença bruta aparece. Se reprovar, a Análise refaz uma vez; na segunda falha, o sistema se abstém.
+5. **Orquestrador** entrega o texto aprovado sem alteração, com os limites dos dados e as fontes citadas ([ADR-011](../adr/011-orquestrador-formata-resposta.md)).
 
 ## Segurança: nenhum agente obedece texto externo
 
@@ -100,7 +96,7 @@ sequenceDiagram
 
 -   **Roteamento em código**
 
-    O LLM do supervisor só devolve um JSON de intenção validado por schema. Quem escolhe o próximo nó é uma função Python.
+    A intenção é lida por regras e quem escolhe o próximo nó é uma função Python. O LLM só escreve o rascunho, e a Validação confere tudo.
 
 -   **Conteúdo como dado**
 
@@ -129,44 +125,23 @@ sequenceDiagram
 | Equidade | scores por recorte agregado (RNF-14) |
 | Privacidade | `mask()` remove PII antes de enviar (RNF-16) |
 
-```python
-from langfuse import get_client
-from langfuse.langchain import CallbackHandler
-from langgraph.graph import StateGraph, START, END
+**Implementado no protótipo (19/11):** um trace `responder-pergunta` por pergunta. A raiz é um `agent`, com a pergunta como entrada e a resposta como saída. Os nós do LangGraph entram pelo `CallbackHandler`, e as etapas têm o tipo certo:
 
-graph = StateGraph(ArtemisState)
-graph.add_node("guardrail", guardrail_node)
-graph.add_node("supervisor", supervisor_node)
-graph.add_node("salarial", salary_agent)      # chama a consulta salarial via porta
-graph.add_node("direitos", rights_agent)      # chama artemis_rag.buscar (API pública do RAG)
-graph.add_node("validacao", validation_node)
-graph.add_node("comunicacao", communication_node)
-graph.add_edge(START, "guardrail")
-graph.add_conditional_edges("guardrail", block_or_continue)
-graph.add_conditional_edges("supervisor", route_by_intent)  # Send() para cada agente
-app = graph.compile(checkpointer=postgres_saver)
+| Observação | Tipo | O que mostra |
+|---|---|---|
+| `orquestrador`, `pesquisa`, `analise_dados`, `analise_sintese`, `validacao`, `resposta` | chain | estado que entrou e saiu de cada nó |
+| `verificar-entrada` | guardrail | se a pergunta foi bloqueada |
+| `buscar-direitos` | retriever | tema, top_k e trechos com citação |
+| `consultar-rais` | tool | família da CBO, UF e números da RAIS |
+| `redigir-rascunho` | generation | prompt, resposta, modelo e tokens |
+| `validar-rascunho` | evaluator | veredito e motivo exato da reprovação |
 
-langfuse = get_client()   # LANGFUSE_PUBLIC_KEY / SECRET_KEY / HOST no .env
-handler = CallbackHandler()
-
-result = app.invoke(
-    {"message": texto},
-    config={
-        "callbacks": [handler],
-        "configurable": {"thread_id": conversa_id},
-        "metadata": {"langfuse_session_id": conversa_id,
-                     "langfuse_user_id": user_hash,
-                     "langfuse_tags": ["oraculo", "mvp"]},
-    },
-)
-```
-
-O nó de Direitos reaproveita o `Retriever` e a validação de citações de `src/query.py` sem mudar o RAG.
+Também já entraram (19/11): sessão por conversa no chat do terminal, o prompt da Análise versionado só no Langfuse (`artemis/analise-rascunho`), environment e release, scores por trace (`validacao_aprovada`, `tentativas`, `abstencao`, `bloqueada`, `fora_de_escopo`) e memória da conversa só com intenção, ocupação e UF ([artemishub_agents#41](https://github.com/ArtemisHubApp/artemishub_agents/pull/41), [#46](https://github.com/ArtemisHubApp/artemishub_agents/pull/46), [#47](https://github.com/ArtemisHubApp/artemishub_agents/pull/47), [#49](https://github.com/ArtemisHubApp/artemishub_agents/pull/49)). Datasets e o `mask()` de PII entram nas próximas semanas. A Pesquisa chama o RAG por subprocesso; a troca pelo import de `artemis_rag.buscar` (pacote publicado em [artemishub_rag#27](https://github.com/ArtemisHubApp/artemishub_rag/pull/27)) está na [artemishub_agents#37](https://github.com/ArtemisHubApp/artemishub_agents/issues/37).
 
 ## Ordem de implementação
 
 1. **Até 20/11:** ADR do framework (este repositório), remote do DVC configurado e tabela de medianas por família CBO × UF × sexo versionada no git.
-2. **Até 20/11:** pacote do RAG renomeado para poder ser importado pelo `artemishub_agents` (os dois repositórios usam `src`).
-3. **Até 20/11:** grafo da demo (Guardrail, Supervisor, Salarial, Direitos, Validação e Comunicação) com testes por nó e `reports/demo_multiagente.md` para o Teams.
-4. Langfuse instrumentando o grafo; datasets de avaliação e de injeção no CI.
+2. **Feito em 19/11:** pacote do RAG renomeado para `artemis_rag`, importável pelo `artemishub_agents` ([artemishub_rag#27](https://github.com/ArtemisHubApp/artemishub_rag/pull/27)).
+3. **Feito em 19/11:** grafo da demo (Orquestrador, Pesquisa, Análise e Validação) com testes por nó e de ponta a ponta, executor `uv run python -m src.agentes.demo` e Langfuse instrumentando o grafo ([artemishub_agents#27](https://github.com/ArtemisHubApp/artemishub_agents/issues/27)).
+4. Datasets de avaliação e de injeção no CI; juiz por LLM na Validação.
 5. [Modelo salarial](modelo-salarial.md) no lugar das medianas; agente Perfil; subgrafo de Negociação; Oportunidades e Plano.

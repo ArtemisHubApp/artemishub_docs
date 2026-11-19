@@ -36,7 +36,7 @@ Com o PR aprovado o card vai para **Testing**; após o merge, para **Done**.
 
 ## Formulários e labels
 
-Em **New issue** aparecem 4 formulários: feature, bug, chore e docs. A issue em branco está desligada. Todo formulário pede **Semana**, **Critérios de aceite** e **Repo afetado**, e já coloca a label `tipo: …` sozinho.
+Em **New issue** aparecem 4 formulários: feature, bug, chore e docs. A issue em branco está desligada. Todo formulário pede **Semana**, **Critérios de aceite** e **Repositório afetado**, e já coloca a label `tipo: …` sozinho.
 
 Quem faz a triagem acrescenta `semana-N` e `prioridade: alta|média|baixa` e preenche o campo **Semana** do Project.
 

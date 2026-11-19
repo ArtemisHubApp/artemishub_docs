@@ -16,3 +16,4 @@ Para um ADR novo, copie o formato do [ADR-002](002-framework-multiagente.md) e u
 | [ADR-008](008-staging-e-worktrees.md) | Fluxo `staging → main` com worktrees | proposto |
 | [ADR-009](009-higiene-github.md) | Higiene do GitHub: issue por tarefa, Conventional Commits, PR pequeno | proposto |
 | [ADR-010](010-codigo-limpo-hexagonal.md) | Código limpo e clean architecture (hexagonal) com checagem no CI | proposto |
+| [ADR-011](011-orquestrador-formata-resposta.md) | O orquestrador formata a resposta final, sem agente de Comunicação | aceito |

@@ -15,7 +15,7 @@ Em cima, a base é construída e publicada de uma vez; embaixo, cada pergunta bu
 
 === "Preparação offline"
 
-    Comando: `python -m src.pipeline`
+    Comando: `python -m artemis_rag.pipeline`
 
     | Etapa | Descrição |
     |---|---|
@@ -30,7 +30,7 @@ Em cima, a base é construída e publicada de uma vez; embaixo, cada pergunta bu
 
 === "Consulta online"
 
-    Comando: `python -m src.query`
+    Comando: `python -m artemis_rag.query`. Pelos agentes, como biblioteca: `artemis_rag.buscar` (evidências `FONTE N`, sem LLM) e `artemis_rag.gerar` (resposta com citações validadas).
 
     | Etapa | Descrição |
     |---|---|
@@ -43,7 +43,7 @@ Em cima, a base é construída e publicada de uma vez; embaixo, cada pergunta bu
 
 ```mermaid
 flowchart TB
-    subgraph OFF["Preparação offline · python -m src.pipeline"]
+    subgraph OFF["Preparação offline · python -m artemis_rag.pipeline"]
         direction LR
         S[Fontes oficiais<br/>20 ativas · 245 seções] --> C[Coleta e extração<br/>PyMuPDF · BS4 · SHA-256]
         C --> V[Validação e chunks<br/>600 / 100]
@@ -51,7 +51,7 @@ flowchart TB
     end
     E -- publicação atômica --> DB[(ChromaDB · índice publicado<br/>1.209 chunks · active.json)]
     DB -- vetores + textos --> B
-    subgraph ON["Consulta online · python -m src.query"]
+    subgraph ON["Consulta online · python -m artemis_rag.query"]
         direction LR
         P[Pergunta] --> B[Busca híbrida<br/>vetorial 20 · BM25 20 · RRF]
         B --> L[Geração com LLM<br/>gemini-3.5-flash-lite]

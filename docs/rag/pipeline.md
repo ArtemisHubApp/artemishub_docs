@@ -5,7 +5,7 @@ codigo: "src/pipeline.py · src/ingest.py · src/quality.py · src/prepare.py ·
 
 # Pipeline de ingestão
 
-Um comando (`python -m src.pipeline`) leva as fontes oficiais até um índice publicado, e **só publica se todas as etapas passarem**. Se uma fonte falhar, nada é publicado e o índice anterior continua no ar.
+Um comando (`python -m artemis_rag.pipeline`) leva as fontes oficiais até um índice publicado, e **só publica se todas as etapas passarem**. Se uma fonte falhar, nada é publicado e o índice anterior continua no ar.
 
 ```mermaid
 flowchart LR

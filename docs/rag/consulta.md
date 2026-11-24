@@ -1,11 +1,17 @@
 ---
 origem: "Grupo 11 - Second Challenge - RAG (Relatório de Projeto, Semana 2) · seção Consulta, recuperação e resposta"
-codigo: "src/query.py · src/lexical.py"
+codigo: "artemis_rag/query.py · artemis_rag/lexical.py"
 ---
 
 # Consulta e resposta
 
-A pergunta passa por **busca híbrida** e volta com os **5 trechos mais relevantes**; o Gemini (`gemini-3.5-flash-lite`, temperatura 0) responde **só com eles**, e a resposta só é exibida se **todo parágrafo citar uma fonte recuperada**. Sem evidência, o sistema responde: *"Não encontrei evidência suficiente na base para responder."*
+Por padrão, a busca híbrida seleciona até **5 trechos**. O modelo configurado recebe a instrução de responder com base neles e citar as fontes. O validador verifica o formato e se os identificadores citados correspondem aos trechos recuperados. A conferência de que cada fonte sustenta a afirmação é uma etapa da [avaliação](../avaliacao/index.md).
+
+Quando falta evidência, o sistema pode se abster. Uma resposta com citação inválida é bloqueada. Quando houver resposta, abra as fontes e confira se o trecho e a página sustentam a afirmação. Para testar a consulta localmente, siga o [guia de reprodução](../guias/reproduzir.md) e execute:
+
+```bash
+uv run python -m artemis_rag.query "Quais empresas precisam publicar o relatório de transparência salarial?"
+```
 
 ## Etapas da consulta
 

@@ -42,6 +42,10 @@ São **dois conjuntos de 16 perguntas** com gabarito de documento e página: o *
 **Fidelidade**
 :   Na demonstração, todas as afirmações exibidas foram conferidas manualmente contra os trechos; nenhuma estava sem sustentação, e houve uma citação na página vizinha.
 
+## Avaliação das respostas geradas
+
+O repositório do RAG inclui um experimento que compara as respostas do mesmo modelo em três condições: sem documentos, com instrução para raciocinar passo a passo e com trechos recuperados pelo RAG. O julgamento usa as respostas esperadas como referência e registra abstenções e bloqueios por citações inválidas. As métricas de recuperação acima medem quais páginas foram encontradas. Os resultados consolidados da comparação de respostas ainda precisam ser publicados. Consulte os scripts de [geração](https://github.com/ArtemisHubApp/artemishub_rag/blob/main/scripts/compare_llm_rag.py) e [avaliação](https://github.com/ArtemisHubApp/artemishub_rag/blob/main/scripts/judge_answers.py).
+
 ## Para ir mais fundo
 
 <div class="grid cards" markdown>

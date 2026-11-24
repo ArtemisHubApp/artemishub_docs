@@ -5,9 +5,9 @@ codigo: "github.com/ArtemisHubApp/artemishub_agents"
 
 # Modelo salarial
 
-Uma referência que não repete a desigualdade.
+Esta página descreve a proposta de um modelo preditivo. Para consultar as estatísticas disponíveis hoje, veja a [consulta salarial da RAIS](consulta-salarial.md).
 
-A estimativa vem de uma regressão clássica treinada na RAIS. O problema é que o salário histórico já carrega a diferença de gênero e raça. Um modelo treinado nele, do jeito que ele é, aprende a pagar menos às mulheres. Tirar sexo e raça das variáveis não resolve: a diferença continua chegando ao modelo pela ocupação, pelo setor e pela jornada, só que sem aparecer.
+A proposta usa uma regressão treinada na RAIS. O problema é que o salário histórico já carrega a diferença de gênero e raça. Um modelo treinado nele, do jeito que ele é, aprende a pagar menos às mulheres. Tirar sexo e raça das variáveis não resolve: a diferença continua chegando ao modelo pela ocupação, pelo setor e pela jornada, só que sem aparecer.
 
 A proposta é incluir sexo e raça no treino para separar o efeito deles do efeito do perfil, e fixá-los num grupo de referência na hora de prever. É a lógica da decomposição de Oaxaca-Blinder, usada na economia do trabalho para medir diferença salarial.
 
@@ -27,7 +27,7 @@ diferença        = faixa_referência − faixa_mercado       → diferença por
 
     Salário informado: **8,3**, ou seja, **14% abaixo** da mediana de referência.
 
-    Números inventados para mostrar o formato da tela Salário. Os valores reais saem do modelo treinado na RAIS.
+    Números inventados para mostrar o formato da tela Salário. A implementação prevista calculará as faixas com dados da RAIS.
 
 ## Decisões
 
@@ -70,7 +70,7 @@ diferença        = faixa_referência − faixa_mercado       → diferença por
 4. Registrar dados (DVC), parâmetros, métricas por grupo e o grupo de referência no MLflow.
 5. Expor como ferramenta `estimar_faixa(cbo, uf, escolaridade, experiencia)`, que devolve as duas faixas, a fonte, o ano da RAIS e os limites. O agente Salarial só explica esses números.
 
-Até o modelo ficar pronto, o agente Salarial usa `src.salarios.consultar` do `artemishub_agents`: medianas, P25 e P75 por família da CBO × UF × sexo da RAIS STEM 2025, com recortes de pelo menos 30 vínculos.
+O agente de Análise já usa `src.salarios.consultar` do `artemishub_agents` para consultar medianas, P25 e P75 por família da CBO × UF × sexo da RAIS STEM 2025, com recortes de pelo menos 30 vínculos.
 
 ## Referências
 

@@ -26,7 +26,7 @@ Adiantar o **`docker-compose.yml`** no orquestrador como um **ambiente de desenv
 Uso, só com o Docker Desktop instalado:
 
 ```bash
-docker compose run --rm rag uv run python -m src.query "O que diz a Lei 14.611?"
+docker compose run --rm rag uv run python -m artemis_rag.query "O que diz a Lei 14.611?"
 docker compose run --rm agents uv run pytest -q
 ```
 

@@ -5,13 +5,19 @@ codigo: "github.com/ArtemisHubApp"
 
 # Arquitetura
 
-O Artemis é dividido em **cinco repositórios**, cada um com uma responsabilidade clara.
+O [protótipo multiagente](multiagentes.md) roda no terminal com LangGraph. O Orquestrador encaminha a pergunta para Pesquisa e/ou Análise. A Pesquisa recupera trechos de fontes públicas, a Análise reúne os dados da RAIS e as evidências em um rascunho, e a Validação verifica citações e valores antes de o Orquestrador formatar a resposta.
+
+Também é possível executar separadamente a [consulta ao RAG](../rag/consulta.md) e a [consulta salarial da RAIS](consulta-salarial.md). Para rodar a demonstração ou conversar com o protótipo, siga o [guia de reprodução](../guias/reproduzir.md#prototipo-multiagente).
+
+O diagrama mostra o protótipo e a integração prevista com a interface web e a API.
 
 ```mermaid
 flowchart LR
-    U([Usuária]) --> FE[artemishub_frontend<br/>Interface web]
-    FE --> BE[artemishub_backend<br/>API]
-    BE --> AG[artemishub_agents<br/>Multiagentes · LangGraph]
+    U([Usuária]) --> CLI[Terminal · demo e chat]
+    CLI --> AG[artemishub_agents<br/>Multiagentes · LangGraph]
+    U -.-> FE[Interface web · planejada]
+    FE -.-> BE[API · planejada]
+    BE -.-> AG
     AG --> RAG[artemishub_rag<br/>Base de conhecimento]
     AG --> LLM[(Gemini via API<br/>compatível OpenAI)]
     AG --> RAIS[(RAIS STEM 2025)]

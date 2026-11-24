@@ -4,18 +4,18 @@ origem: "README do repositório artemishub_docs (seção Como trabalhamos)"
 
 # Como trabalhamos (kanban)
 
-Todas as issues, de **qualquer repositório**, entram no mesmo [GitHub Project](https://github.com/orgs/ArtemisHubApp/projects), com as colunas:
+Todas as issues, de **qualquer repositório**, entram no mesmo [GitHub Project](https://github.com/orgs/ArtemisHubApp/projects/1/views/2), com as colunas:
 
-**Backlog → Todo → In Progress → In Review → Testing → Done**
+**Backlog → Ready Todo → In Progress → In Review → Testing → Done**
 
 ```mermaid
 flowchart LR
-    B[Backlog] --> T[Todo] --> P[In Progress] --> R[In Review] --> X[Testing] --> D[Done]
+    B[Backlog] --> T[Ready Todo] --> P[In Progress] --> R[In Review] --> X[Testing] --> D[Done]
 ```
 
 <ol class="art-steps" markdown>
 <li markdown>
-Crie a issue no repositório correspondente (ou no `artemishub_docs`, se for documentação ou tarefa geral).
+Crie a issue no repositório correspondente (ou no `artemishub_docs`, se for documentação ou tarefa geral) e inclua no quadro: `gh project item-add 1 --owner ArtemisHubApp --url <URL da issue>`.
 </li>
 <li markdown>
 Marque a **Semana** do roadmap a que ela pertence.

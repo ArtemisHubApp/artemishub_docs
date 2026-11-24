@@ -5,7 +5,7 @@ codigo: "github.com/ArtemisHubApp/artemishub_rag"
 
 # Como reproduzir
 
-Com **Python 3.11 ou 3.12** e **uv**, os comandos abaixo reconstroem a base, o índice, as métricas e a demonstração. Os embeddings rodam localmente; só a geração precisa de `LLM_API_KEY`, `LLM_BASE_URL` e `LLM_MODEL=gemini-3.5-flash-lite` no arquivo `.env`.
+Com **Python 3.11 a 3.13** e **uv**, os comandos abaixo reconstroem a base, o índice, as métricas e a demonstração. Os embeddings rodam localmente; só a geração precisa de `LLM_API_KEY`, `LLM_BASE_URL` e `LLM_MODEL=gemini-3.5-flash-lite` no arquivo `.env`.
 
 ```bash title="Passo a passo"
 git clone https://github.com/ArtemisHubApp/artemishub_rag.git && cd artemishub_rag
@@ -32,9 +32,9 @@ uv run python -m src.agentes.demo
 uv run python -m src.agentes.chat
 ```
 
-A demonstração executa uma pergunta de exemplo e mostra as etapas do grafo. O chat aceita perguntas no terminal. Para testar perguntas sobre direitos, prepare o índice do RAG com o comando de pipeline acima. Se o RAG estiver em outro diretório, aponte `ARTEMIS_RAG_DIR` para ele. Configure as variáveis do LLM para usar a síntese gerada pelo modelo. Sem essa configuração, o protótipo usa um rascunho padrão.
+A demonstração executa uma pergunta de exemplo e mostra as etapas do grafo. O chat aceita perguntas no terminal. Para testar perguntas sobre direitos, prepare o índice do RAG com o comando de pipeline acima. Se o RAG estiver em outro diretório, aponte `ARTEMIS_RAG_DIR` para ele, ou `ARTEMIS_RAG_INDEX_DIR` direto para o índice. Para usar a síntese gerada pelo modelo, configure as variáveis do LLM e as chaves do Langfuse, de onde vem o prompt. Sem uma delas, o protótipo usa um rascunho padrão.
 
-Confira a UF e a família ocupacional usadas nas estatísticas salariais e abra as fontes citadas nas respostas sobre direitos. Se o protótipo se abstiver, leia o motivo exibido antes de reformular a pergunta. Veja o [fluxo multiagente](../arquitetura/multiagentes.md) e os [limites dos dados salariais](../arquitetura/consulta-salarial.md#como-interpretar).
+Confira a UF e a família ocupacional usadas nas estatísticas salariais e abra as fontes citadas nas respostas sobre direitos. Se o protótipo se abstiver, o texto não mostra o motivo: veja-o no passo a passo (`/passos` no chat) antes de reformular a pergunta. Veja o [fluxo multiagente](../arquitetura/multiagentes.md) e os [limites dos dados salariais](../arquitetura/consulta-salarial.md#como-interpretar).
 
 !!! info "Integração contínua"
-    O CI roda **Ruff** e **pytest** em Python 3.11 e 3.12 a cada push.
+    O CI roda **Ruff** e **pytest** em Python 3.11, 3.12 e 3.13 a cada push.

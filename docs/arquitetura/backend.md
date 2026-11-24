@@ -20,7 +20,8 @@ flowchart LR
     BE -- token de serviço --> AG[artemishub_agents<br/>POST /v1/responder]
     AG --> RAG[artemishub_rag]
     AG --> RAIS[(RAIS)]
-    AG --> LLM[(Gemini)]
+    AG --> LLM[(LLM<br/>provedor configurável)]
+    AG -. se o principal falhar .-> RES[(LLM reserva<br/>planejado)]
     AG -. traces e prompts .-> LF[[Langfuse]]
 ```
 
@@ -72,4 +73,4 @@ O contrato do `/v1/responder` está em definição na [artemishub_agents#36](htt
 
 - Uma usuária nunca acessa a conversa de outra; a API responde 404, sem revelar que ela existe.
 - Apagar a conversa ou a conta é definitivo no Postgres.
-- O texto das perguntas vai para o Gemini e para o Langfuse, sem o e-mail. Os registros no Langfuse permanecem depois da exclusão. O texto do consentimento, o prazo e a justificativa dependem do ADR de LGPD.
+- O texto das perguntas vai para o provedor de LLM configurado (hoje, o Gemini) e para o Langfuse, sem o e-mail. Cada provedor novo, inclusive o reserva, precisa constar no consentimento. Os registros no Langfuse permanecem depois da exclusão. O texto do consentimento, o prazo e a justificativa dependem do ADR de LGPD.

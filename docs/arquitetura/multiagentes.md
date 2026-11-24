@@ -33,9 +33,12 @@ flowchart TB
     FMT -- resposta --> BE
     DAD --> RAIS[(RAIS STEM 2025<br/>medianas)]
     DIR --> RAG[(artemishub_rag<br/>Chroma + BM25)]
-    SIN --> LLM[(Gemini<br/>API compatível OpenAI)]
+    SIN --> LLM[(LLM<br/>provedor configurável)]
+    SIN -. se o principal falhar .-> RES[(LLM reserva<br/>planejado)]
     GRAFO -. traces .-> LF[[Langfuse]]
 ```
+
+O provedor de LLM é escolhido no `.env` (`LLM_BASE_URL`, `LLM_MODEL`, `LLM_API_KEY`), entre as APIs compatíveis com a da OpenAI; até agora só o Gemini foi testado. O LLM reserva ainda não existe: hoje, se o LLM falha, a Análise usa um rascunho padrão, sem LLM ([artemishub_agents#60](https://github.com/ArtemisHubApp/artemishub_agents/issues/60)).
 
 Todos os nós do grafo acima entram na demonstração de 20/11; o frontend e o backend ainda não (a demo roda pela linha de comando). Nas próximas semanas, o Orquestrador passa a despachar também para **Perfil**, **Oportunidades**, **Plano** e **Negociação** (subgrafo multi-turno), que usam o parser de CV, o catálogo de oportunidades e o Postgres (perfil, plano e checkpoints do grafo). Pesquisa e Análise (dados) rodam em paralelo no mesmo passo do grafo.
 

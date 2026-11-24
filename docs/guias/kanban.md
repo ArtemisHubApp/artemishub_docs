@@ -15,6 +15,9 @@ flowchart LR
 
 <ol class="art-steps" markdown>
 <li markdown>
+Procure se a issue já existe, em qualquer repositório, aberta ou fechada (`gh search issues --owner ArtemisHubApp "<palavras-chave>"`). Se existir aberta, use-a.
+</li>
+<li markdown>
 Crie a issue no repositório correspondente (ou no `artemishub_docs`, se for documentação ou tarefa geral) e inclua no quadro: `gh project item-add 1 --owner ArtemisHubApp --url <URL da issue>`.
 </li>
 <li markdown>

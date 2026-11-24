@@ -134,6 +134,7 @@ nav:
       - arquitetura/index.md
       - Arquitetura do RAG: arquitetura/rag.md
       - Arquitetura multiagente: arquitetura/multiagentes.md
+      - Arquitetura do backend: arquitetura/backend.md
       - Consulta salarial (RAIS): arquitetura/consulta-salarial.md
       - Modelo salarial: arquitetura/modelo-salarial.md
       - Decisões (ADRs):

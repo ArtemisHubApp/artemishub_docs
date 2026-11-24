@@ -9,7 +9,7 @@ O [protótipo multiagente](multiagentes.md) roda no terminal com LangGraph. O Or
 
 Também é possível executar separadamente a [consulta ao RAG](../rag/consulta.md) e a [consulta salarial da RAIS](consulta-salarial.md). Para rodar a demonstração ou conversar com o protótipo, siga o [guia de reprodução](../guias/reproduzir.md#prototipo-multiagente).
 
-O diagrama mostra o protótipo e a integração prevista com a interface web e a API.
+O diagrama mostra o protótipo e a integração prevista com a interface web e a [API](backend.md).
 
 ```mermaid
 flowchart LR

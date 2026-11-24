@@ -54,7 +54,7 @@ flowchart TB
     subgraph ON["Consulta online · python -m artemis_rag.query"]
         direction LR
         P[Pergunta] --> B[Busca híbrida<br/>vetorial 20 · BM25 20 · RRF]
-        B --> L[Geração com LLM<br/>gemini-3.5-flash-lite]
+        B --> L[Geração com LLM<br/>provedor configurável]
         L --> R[Resposta citada<br/>ou abstenção]
     end
 ```

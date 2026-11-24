@@ -19,7 +19,8 @@ flowchart LR
     FE -.-> BE[API · planejada]
     BE -.-> AG
     AG --> RAG[artemishub_rag<br/>Base de conhecimento]
-    AG --> LLM[(Gemini via API<br/>compatível OpenAI)]
+    AG --> LLM[(LLM<br/>provedor configurável)]
+    AG -. se o principal falhar .-> RES[(LLM reserva<br/>planejado)]
     AG --> RAIS[(RAIS STEM 2025)]
     AG -. traces .-> LF[[Langfuse]]
     RAG --> SRC[(Fontes públicas<br/>CLT, legislação, dados)]

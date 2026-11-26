@@ -44,11 +44,15 @@ São **dois conjuntos de 16 perguntas** com gabarito de documento e página: o *
 
 ## Avaliação das respostas geradas
 
-O repositório do RAG inclui um experimento que compara as respostas do mesmo modelo em três condições: sem documentos, com instrução para raciocinar passo a passo e com trechos recuperados pelo RAG. O julgamento usa as respostas esperadas como referência e registra abstenções e bloqueios por citações inválidas. As métricas de recuperação acima medem quais páginas foram encontradas. Os resultados consolidados da comparação de respostas ainda precisam ser publicados. Consulte os scripts de [geração](https://github.com/ArtemisHubApp/artemishub_rag/blob/main/scripts/compare_llm_rag.py) e [avaliação](https://github.com/ArtemisHubApp/artemishub_rag/blob/main/scripts/judge_answers.py).
+O repositório do RAG inclui um experimento que compara as respostas do mesmo modelo em três condições: sem documentos, com instrução para raciocinar passo a passo (CoT) e com trechos recuperados pelo RAG. O julgamento usa as respostas esperadas como referência e registra abstenções e bloqueios por citações inválidas. As métricas de recuperação acima medem quais páginas foram encontradas; os resultados consolidados da rodada histórica da Semana 3 estão publicados em [Comparação entre LLM puro, CoT e RAG](comparacao-llm-cot-rag.md). Consulte também os scripts de [geração](https://github.com/ArtemisHubApp/artemishub_rag/blob/main/scripts/compare_llm_rag.py) e [avaliação](https://github.com/ArtemisHubApp/artemishub_rag/blob/main/scripts/judge_answers.py).
 
 ## Para ir mais fundo
 
 <div class="grid cards" markdown>
+
+- :material-scale-balance: **[Comparação entre LLM puro, CoT e RAG](comparacao-llm-cot-rag.md)**
+
+    Metodologia, resultados no holdout, fidelidade e limites da rodada da Semana 3.
 
 - :material-alert-circle-outline: **[Limitações e próximos passos](limitacoes.md)**
 

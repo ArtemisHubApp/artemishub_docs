@@ -58,7 +58,7 @@ O banco não fica preso enquanto os agentes respondem. Se a trava passar de 60 s
 
 | Grupo | Rotas |
 |---|---|
-| Contas | `POST /v1/auth/cadastro`, `POST /v1/auth/login`, `POST /v1/auth/sair`, `GET /v1/conta`, `DELETE /v1/conta`, `GET /v1/consentimento` |
+| Contas | `POST /v1/auth/cadastro`, `POST /v1/auth/login`, `POST /v1/auth/sair`, `GET`, `PATCH` e `DELETE /v1/conta`, `GET /v1/consentimento` |
 | Conversas | `GET`, `POST` e `DELETE /v1/conversas` (lista paginada, criar, apagar todas), `GET` e `DELETE /v1/conversas/{id}` |
 | Perguntas | `POST /v1/conversas/{id}/mensagens` |
 | Saúde | `GET /health` |
@@ -69,7 +69,7 @@ A referência completa fica no README e no [OpenAPI](https://github.com/ArtemisH
 
 | Tabela | Guarda |
 |---|---|
-| `usuarias` | e-mail, hash da senha (argon2) e data do consentimento |
+| `usuarias` | nome (primeiro nome ou apelido), e-mail, hash da senha (argon2) e data do consentimento |
 | `conversas` | dona, título, lembrança (intenção, ocupação e UF) e a trava de pergunta em andamento |
 | `mensagens` | texto, quem escreveu, ligação entre pergunta e resposta, e se a resposta foi aprovada ou bloqueada |
 
@@ -78,7 +78,7 @@ A referência completa fica no README e no [OpenAPI](https://github.com/ArtemisH
 - **Sessão:** o login grava um cookie `HttpOnly`, `Secure` e `SameSite=Strict` de 60 minutos; o JavaScript da página não o lê. O token também volta no corpo, para testes e outros clientes.
 - **Outros sites:** com o cookie, toda escrita exige que o pedido venha do próprio site (`Origin`); senão, 403. Frontend e API ficam no mesmo endereço, sem CORS.
 - **Isolamento:** uma usuária nunca acessa a conversa de outra; a API responde 404, sem revelar que ela existe.
-- **Logs:** sem texto das mensagens, e-mail, senha ou token.
+- **Logs:** sem texto das mensagens, nome, e-mail, senha ou token.
 - **Pendente antes do deploy:** limite de tentativas de login ([artemishub_backend#17](https://github.com/ArtemisHubApp/artemishub_backend/issues/17)).
 
 ## Memória curta e proteções
@@ -90,6 +90,8 @@ A referência completa fica no README e no [OpenAPI](https://github.com/ArtemisH
 
 ## Privacidade
 
+- O cadastro pede como a usuária quer ser chamada: primeiro nome ou apelido, de 1 a 40 caracteres, nunca o nome completo. Ela pode trocar em Minha conta.
+- A Artemis vai chamar a usuária pelo nome. Ele ainda não é enviado aos agentes: isso entra com o contrato do [artemishub_agents#36](https://github.com/ArtemisHubApp/artemishub_agents/issues/36), e então passa também pelo provedor de LLM e pelo Langfuse. O texto do consentimento já avisa.
 - Apagar uma conversa, todas ou a conta é definitivo no Postgres.
 - O texto das perguntas vai para o provedor de LLM (hoje, o Gemini) e para o Langfuse, sem o e-mail. Os registros no Langfuse permanecem depois da exclusão.
 - O texto do consentimento é provisório; o prazo de retenção e a justificativa dependem do ADR de LGPD.

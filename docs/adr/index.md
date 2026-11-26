@@ -6,7 +6,7 @@ Para um ADR novo, copie o formato do [ADR-002](002-framework-multiagente.md) e u
 
 | ADR | Decisão | Status |
 |---|---|---|
-| ADR-001 | Stack do projeto (backend, frontend, banco, deploy) | em elaboração ([artemishub_docs#3](https://github.com/ArtemisHubApp/artemishub_docs/issues/3)) |
+| [ADR-001](001-stack.md) | Stack: FastAPI e Postgres no backend, React no frontend, agentes como serviço separado | proposto |
 | [ADR-002](002-framework-multiagente.md) | LangGraph + Langfuse para o sistema multiagente | proposto |
 | [ADR-003](003-repo-orquestrador.md) | Repo orquestrador com submódulos | proposto |
 | [ADR-004](004-agents-md-fonte-unica.md) | `AGENTS.md` como fonte única de regras para todos os agentes de IA | proposto |

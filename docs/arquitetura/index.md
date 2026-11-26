@@ -9,14 +9,14 @@ O [protótipo multiagente](multiagentes.md) roda no terminal com LangGraph. O Or
 
 Também é possível executar separadamente a [consulta ao RAG](../rag/consulta.md) e a [consulta salarial da RAIS](consulta-salarial.md). Para rodar a demonstração ou conversar com o protótipo, siga o [guia de reprodução](../guias/reproduzir.md#prototipo-multiagente).
 
-O diagrama mostra o protótipo e a integração prevista com a interface web e a [API](backend.md).
+O diagrama mostra o protótipo, a [API](backend.md), já pronta, e a interface web, em construção.
 
 ```mermaid
 flowchart LR
     U([Usuária]) --> CLI[Terminal · demo e chat]
     CLI --> AG[artemishub_agents<br/>Multiagentes · LangGraph]
     U -.-> FE[Interface web · planejada]
-    FE -.-> BE[API · planejada]
+    FE -.-> BE[API · FastAPI e Postgres]
     BE -.-> AG
     AG --> RAG[artemishub_rag<br/>Base de conhecimento]
     AG --> LLM[(LLM<br/>provedor configurável)]

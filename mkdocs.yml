@@ -139,6 +139,7 @@ nav:
       - Modelo salarial: arquitetura/modelo-salarial.md
       - Decisões (ADRs):
           - adr/index.md
+          - ADR-001 Stack do projeto: adr/001-stack.md
           - ADR-002 Framework multiagente: adr/002-framework-multiagente.md
           - ADR-003 Repo orquestrador: adr/003-repo-orquestrador.md
           - ADR-004 AGENTS.md como fonte única: adr/004-agents-md-fonte-unica.md

@@ -152,6 +152,7 @@ nav:
           - ADR-011 Orquestrador formata a resposta: adr/011-orquestrador-formata-resposta.md
   - Avaliação:
       - avaliacao/index.md
+      - Comparação LLM, CoT e RAG: avaliacao/comparacao-llm-cot-rag.md
       - Limitações e próximos passos: avaliacao/limitacoes.md
       - Relatório de validação: avaliacao/relatorio-de-validacao.md
       - Relatório da demonstração: avaliacao/relatorio-da-demonstracao.md

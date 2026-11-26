@@ -9,13 +9,13 @@ O [protótipo multiagente](multiagentes.md) roda no terminal com LangGraph. O Or
 
 Também é possível executar separadamente a [consulta ao RAG](../rag/consulta.md) e a [consulta salarial da RAIS](consulta-salarial.md). Para rodar a demonstração ou conversar com o protótipo, siga o [guia de reprodução](../guias/reproduzir.md#prototipo-multiagente).
 
-O diagrama mostra o protótipo, a [API](backend.md), já pronta, e a interface web, em construção.
+O diagrama mostra o protótipo, a [API](backend.md), já pronta, e a [interface web](frontend.md), em construção.
 
 ```mermaid
 flowchart LR
     U([Usuária]) --> CLI[Terminal · demo e chat]
     CLI --> AG[artemishub_agents<br/>Multiagentes · LangGraph]
-    U -.-> FE[Interface web · planejada]
+    U -.-> FE[Interface web · em construção]
     FE -.-> BE[API · FastAPI e Postgres]
     BE -.-> AG
     AG --> RAG[artemishub_rag<br/>Base de conhecimento]
@@ -49,7 +49,7 @@ flowchart LR
 
 ## Decisões de arquitetura (ADRs)
 
-As decisões ficam em [Decisões (ADRs)](../adr/index.md). O sistema multiagente usa LangGraph e Langfuse ([ADR-002](../adr/002-framework-multiagente.md)); o desenho completo está em [Arquitetura multiagente](multiagentes.md). A stack do frontend continua "a definir pela equipe" (ADR-001).
+As decisões ficam em [Decisões (ADRs)](../adr/index.md). O sistema multiagente usa LangGraph e Langfuse ([ADR-002](../adr/002-framework-multiagente.md)); o desenho completo está em [Arquitetura multiagente](multiagentes.md). A stack do frontend e do backend está proposta no [ADR-001](../adr/001-stack.md), aguardando aprovação.
 
 ## Próximos documentos previstos
 

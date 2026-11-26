@@ -6,7 +6,7 @@ codigo: "github.com/ArtemisHubApp/artemishub_backend"
 # Arquitetura do backend
 
 !!! info "Estado em 26/11/2026"
-    A API está pronta e testada, com agentes **simulados**. O endpoint dos agentes ainda não existe ([artemishub_agents#36](https://github.com/ArtemisHubApp/artemishub_agents/issues/36)), assim como o frontend ([artemishub_frontend#2](https://github.com/ArtemisHubApp/artemishub_frontend/issues/2)) e o deploy ([artemishub_backend#6](https://github.com/ArtemisHubApp/artemishub_backend/issues/6)). A stack está proposta no [ADR-001](../adr/001-stack.md).
+    A API está pronta e testada, com agentes **simulados**. O endpoint dos agentes ainda não existe ([artemishub_agents#36](https://github.com/ArtemisHubApp/artemishub_agents/issues/36)), assim como o deploy ([artemishub_backend#6](https://github.com/ArtemisHubApp/artemishub_backend/issues/6)). A [interface web](frontend.md) está em construção. A stack está proposta no [ADR-001](../adr/001-stack.md).
 
 O backend guarda as contas e o histórico de conversas da aba **Oráculo de Carreira**. Os agentes são um serviço separado e sem banco: recebem a pergunta e o contexto, e devolvem a resposta.
 

@@ -68,7 +68,7 @@ sequenceDiagram
     participant A as Análise (Analysis)
     participant V as Validação
     U->>O: "Quanto ganha uma analista de sistemas no DF, qual a diferença para homens e quais são meus direitos?"
-    O->>O: guardrail; intenção = salário + direitos; CBO 2124, UF DF (regras, sem LLM)
+    O->>O: guardrail, intenção = salário + direitos, CBO 2124, UF DF (regras, sem LLM)
     par em paralelo
         O->>A: consultar(família CBO 2124, DF)
         A-->>O: mediana, P25–P75 e diferença bruta M/H (RAIS 2025)
@@ -80,7 +80,7 @@ sequenceDiagram
     A-->>O: rascunho com [RAIS] e [FONTE N]
     O->>V: validar(rascunho, números, evidências)
     alt reprovado
-        V-->>O: motivo exato (ex.: valor sem fonte); a Análise refaz 1x
+        V-->>O: motivo exato (ex.: valor sem fonte), a Análise refaz 1x
     end
     O-->>U: texto aprovado + limites dos dados + fontes (template, sem LLM)
 ```

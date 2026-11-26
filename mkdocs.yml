@@ -137,6 +137,7 @@ nav:
       - Arquitetura do backend: arquitetura/backend.md
       - Consulta salarial (RAIS): arquitetura/consulta-salarial.md
       - Modelo salarial: arquitetura/modelo-salarial.md
+      - Implantação e pipelines de dados: arquitetura/implantacao.md
       - Decisões (ADRs):
           - adr/index.md
           - ADR-001 Stack do projeto: adr/001-stack.md
@@ -150,6 +151,7 @@ nav:
           - ADR-009 Higiene do GitHub: adr/009-higiene-github.md
           - ADR-010 Código limpo e hexagonal: adr/010-codigo-limpo-hexagonal.md
           - ADR-011 Orquestrador formata a resposta: adr/011-orquestrador-formata-resposta.md
+          - ADR-012 Implantação e pipelines de dados: adr/012-implantacao-e-pipelines-de-dados.md
   - Avaliação:
       - avaliacao/index.md
       - Limitações e próximos passos: avaliacao/limitacoes.md

@@ -1,0 +1,81 @@
+---
+origem: "ADR-012 (proposto) · artemishub_backend#6"
+---
+
+# Implantação e pipelines de dados
+
+!!! warning "Proposta em revisão"
+    Esta página descreve o desenho do [ADR-012](../adr/012-implantacao-e-pipelines-de-dados.md), que ainda está **proposto**. Nada aqui está implantado ainda.
+
+O sistema tem dois planos:
+
+- **Plano de serviço:** responde à usuária e roda o tempo todo no Azure for Students.
+- **Plano de dados:** atualiza as bases do RAG e da RAIS de vez em quando, com Airflow efêmero. Os resultados são publicados como artefatos versionados.
+
+Os dois planos se encontram na imagem dos `agents`, que já sai do CI com o índice e as tabelas dentro.
+
+```mermaid
+flowchart LR
+    subgraph Dados["Plano de dados · batch"]
+        GA[GitHub Actions agendado<br/>ou compose local] --> AF{{Airflow efêmero}}
+        AF --> D1[dag_rag<br/>10 etapas + avaliação]
+        AF --> D2[dag_rais<br/>anual]
+        D2 -- Asset --> D3[dag_modelo_salarial<br/>Oaxaca-Blinder?]
+        AF --> D4[dag_oportunidades<br/>semanal]
+        D1 & D2 & D3 & D4 --> DVC[(DVC · DagsHub)]
+        D1 & D3 -. métricas .-> MLF[[MLflow · DagsHub]]
+    end
+    DVC -- dvc pull no CI --> IMG[imagem dos agents<br/>índice e tabelas embutidos]
+    subgraph Servico["Plano de serviço · Azure for Students"]
+        U([Usuária · PWA]) --> GW[gateway<br/>Caddy + PWA]
+        GW -- /api --> BE[backend<br/>FastAPI]
+        BE --> PG[(Postgres Flexible)]
+        BE --> AG[agents<br/>LangGraph + RAG]
+        AG --> LLM[(LLM)]
+        AG -. traces .-> LF[[Langfuse]]
+    end
+    IMG --> AG
+```
+
+## Plano de serviço
+
+| Componente | Serviço no Azure | Papel |
+|---|---|---|
+| `gateway` | Container Apps | serve o PWA e faz proxy de `/api`, mantendo a mesma origem que o cookie `SameSite=Strict` exige |
+| `backend` | Container Apps (ingress interno) | contas, conversas, sessão |
+| `agents` | Container Apps (ingress interno) | multiagentes com o RAG embutido, somente leitura |
+| Postgres | Flexible Server B1ms | dados pessoais ficam só aqui |
+
+O PWA usa `vite-plugin-pwa`. O service worker guarda só o shell e os assets, nunca respostas da API.
+
+## Plano de dados
+
+| DAG | Quando roda | O que faz | Publica |
+|---|---|---|---|
+| `dag_rag` | mensal ou sob demanda | coleta, valida, faz o chunking, gera os embeddings e avalia o recall@k | índice do ChromaDB |
+| `dag_rais` | anual (RAIS nova) | baixa, filtra STEM, agrega com pelo menos 30 vínculos por recorte | parquet e agregados |
+| `dag_modelo_salarial` | quando a `dag_rais` publica | modelo salarial (por exemplo, decomposição de Oaxaca-Blinder por recorte) | tabelas agregadas |
+| `dag_oportunidades` | semanal, se o RF-10 virar coleta | catálogo de cursos e bolsas, com a data de atualização | catálogo |
+
+Cada DAG só chama funções dos pacotes dos repositórios, que continuam testáveis sem Airflow. Uma DAG só publica se todas as etapas passarem, a mesma regra da [publicação atômica](../rag/pipeline.md).
+
+## Rastreamento
+
+| Ferramenta | Para quê |
+|---|---|
+| **Langfuse** | LLM em execução: traces, prompts e avaliação das respostas |
+| **MLflow** (no DagsHub) | experimentos offline: modelo salarial e ajuste do RAG |
+| **DVC + DagsHub** | versões dos dados e dos índices |
+
+## Custo estimado
+
+| Item | US$/mês |
+|---|---|
+| Container Apps (dentro da cota gratuita; com 1 réplica mínima nos `agents`, de 10 a 25) | 0 a 25 |
+| Postgres B1ms (gratuito por 12 meses na assinatura de estudante) | 0 |
+| Registro de imagens (ACR Basic; GHCR é gratuito) | 0 a 5 |
+| Airflow no GitHub Actions, DagsHub, MLflow | 0 |
+| LLM (Gemini Flash, cerca de 1.000 perguntas) | 3 a 6 |
+| **Total** | **cerca de 5 a 30** |
+
+Valores estimados com preços de tabela, ainda sem conferência na calculadora do Azure. As alternativas avaliadas e os riscos estão no [ADR-012](../adr/012-implantacao-e-pipelines-de-dados.md).

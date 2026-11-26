@@ -32,8 +32,9 @@ Separar o sistema em dois planos.
 
 | Componente | Serviço | Observação |
 |---|---|---|
-| `gateway` | Azure Container Apps | Caddy serve o PWA (React 19 + Vite + `vite-plugin-pwa`) e faz proxy de `/api`. Assim o PWA e a API ficam na mesma origem. |
-| `backend` | Azure Container Apps | FastAPI, sem ingress público, atrás do gateway |
+| `frontend` | build estático servido pelo `gateway` | PWA em React 19, Vite, TypeScript e Tailwind 4 com `vite-plugin-pwa`. O cliente da API é gerado do `contratos/openapi.json` do backend. |
+| `gateway` | Azure Container Apps | Caddy entrega o build do frontend e faz proxy de `/api`. Assim o PWA e a API ficam na mesma origem. |
+| `backend` | Azure Container Apps | FastAPI em camadas hexagonais (`adapters` → `application` → `domain`): cadastro, sessão, conta e conversas em `/v1`. Sem ingress público, atrás do gateway. |
 | `agents` | Azure Container Apps | LangGraph. O índice do RAG e as tabelas da RAIS **vêm dentro da imagem**, somente leitura. |
 | Banco | Postgres Flexible B1ms | contas, conversas e checkpointer do LangGraph (gratuito por 12 meses na assinatura de estudante) |
 | Imagens | Azure Container Registry Basic | ou GHCR, se a equipe preferir custo zero |
@@ -45,7 +46,7 @@ Separar o sistema em dois planos.
 - **As DAGs só chamam pacotes Python** que já existem e são testados sem Airflow (`artemis_rag.pipeline`, `src.rais_*`, o módulo do modelo salarial).
 - **`dag_rag`** (mensal ou sob demanda): as 10 etapas do pipeline, seguidas da avaliação de recuperação. O índice só é publicado se não piorar.
 - **`dag_rais`** (anual): baixa, filtra STEM, agrega e valida a RAIS.
-- **`dag_modelo_salarial`** (disparada por um Asset quando a `dag_rais` publica): o modelo salarial, por exemplo a decomposição de Oaxaca-Blinder, que gera tabelas agregadas.
+- **`dag_salarial`** (disparada por um Asset quando a `dag_rais` publica): o modelo salarial, por exemplo a decomposição de Oaxaca-Blinder, que gera tabelas agregadas.
 - **`dag_oportunidades`** (semanal, se o RF-10 virar coleta): catálogo de oportunidades com data de atualização (RNF-09).
 - **Saída das DAGs:** artefatos versionados com **DVC** e enviados ao **DagsHub**. O commit do arquivo `.dvc` é o ponteiro da versão publicada, e o rollback é um `git revert`.
 - **Entrega:** o CI faz `dvc pull` com um token de leitura e coloca os artefatos na imagem dos `agents`. Em produção, nada depende do DagsHub estar no ar.
@@ -92,7 +93,7 @@ Custos estimados com preços de tabela em East US, ainda **sem conferência** na
 
 **Para aceitar este ADR, a equipe confirma:**
 
-- se o modelo salarial será Oaxaca-Blinder ou outro (afeta a `dag_modelo_salarial` e o uso do MLflow);
+- se o modelo salarial será Oaxaca-Blinder ou outro (afeta a `dag_salarial` e o uso do MLflow);
 - onde ficam os arquivos das DAGs: numa pasta `dags/` de cada repositório, ou num repositório próprio;
 - os preços na calculadora do Azure e a região permitida pela assinatura de estudante.
 

@@ -20,14 +20,15 @@ flowchart LR
         GA[GitHub Actions agendado<br/>ou compose local] --> AF{{Airflow efêmero}}
         AF --> D1[dag_rag<br/>10 etapas + avaliação]
         AF --> D2[dag_rais<br/>anual]
-        D2 -- Asset --> D3[dag_modelo_salarial<br/>Oaxaca-Blinder?]
+        D2 -- Asset --> D3[dag_salarial<br/>Oaxaca-Blinder?]
         AF --> D4[dag_oportunidades<br/>semanal]
         D1 & D2 & D3 & D4 --> DVC[(DVC · DagsHub)]
         D1 & D3 -. métricas .-> MLF[[MLflow · DagsHub]]
     end
     DVC -- dvc pull no CI --> IMG[imagem dos agents<br/>índice e tabelas embutidos]
     subgraph Servico["Plano de serviço · Azure for Students"]
-        U([Usuária · PWA]) --> GW[gateway<br/>Caddy + PWA]
+        U([Usuária]) --> FE[frontend · PWA<br/>React 19 · Vite]
+        FE --> GW[gateway<br/>Caddy]
         GW -- /api --> BE[backend<br/>FastAPI]
         BE --> PG[(Postgres Flexible)]
         BE --> AG[agents<br/>LangGraph + RAG]
@@ -41,12 +42,25 @@ flowchart LR
 
 | Componente | Serviço no Azure | Papel |
 |---|---|---|
-| `gateway` | Container Apps | serve o PWA e faz proxy de `/api`, mantendo a mesma origem que o cookie `SameSite=Strict` exige |
-| `backend` | Container Apps (ingress interno) | contas, conversas, sessão |
+| `frontend` | build estático no `gateway` | PWA: cadastro com consentimento, login, conversas e Minha conta. O cliente da API é gerado do `contratos/openapi.json`. |
+| `gateway` | Container Apps | entrega o build do frontend e faz proxy de `/api`, mantendo a mesma origem que o cookie `SameSite=Strict` exige |
+| `backend` | Container Apps (ingress interno) | camadas hexagonais; cadastro, sessão em cookie, conta e conversas em `/v1` ([Arquitetura do backend](backend.md)) |
 | `agents` | Container Apps (ingress interno) | multiagentes com o RAG embutido, somente leitura |
 | Postgres | Flexible Server B1ms | dados pessoais ficam só aqui |
 
 O PWA usa `vite-plugin-pwa`. O service worker guarda só o shell e os assets, nunca respostas da API.
+
+## Stack
+
+| Parte | Tecnologias | Situação |
+|---|---|---|
+| Frontend | React 19, Vite, TypeScript, Tailwind 4, `vite-plugin-pwa` (Workbox); Vitest, Testing Library, axe, Playwright | em construção ([frontend#2](https://github.com/ArtemisHubApp/artemishub_frontend/issues/2)) |
+| Backend | Python 3.12, FastAPI, SQLAlchemy 2 async, asyncpg, Alembic, Postgres 16; pytest e testcontainers | em uso |
+| Agentes | Python 3.12, LangGraph, `langchain-openai` (Gemini Flash), Langfuse, pandas, pyarrow | em uso |
+| RAG | Python 3.11 a 3.13, ChromaDB, sentence-transformers (MiniLM multilíngue), BM25 + RRF, PyMuPDF, BeautifulSoup, httpx | em uso |
+| Dados e MLOps | DVC e DagsHub (em uso); Airflow 3, MLflow e o modelo salarial (planejados) | parcial |
+| Infra e entrega | uv, Docker, docker compose, GitHub Actions (em uso); Caddy, Azure Container Apps, Postgres Flexible, GHCR ou ACR, Azure Budgets (planejados) | parcial |
+| Docs e processo | MkDocs Material, GitHub Pages, ADRs, `AGENTS.md`, Superpowers (SDD), GitHub Projects | em uso |
 
 ## Plano de dados
 
@@ -54,7 +68,7 @@ O PWA usa `vite-plugin-pwa`. O service worker guarda só o shell e os assets, nu
 |---|---|---|---|
 | `dag_rag` | mensal ou sob demanda | coleta, valida, faz o chunking, gera os embeddings e avalia o recall@k | índice do ChromaDB |
 | `dag_rais` | anual (RAIS nova) | baixa, filtra STEM, agrega com pelo menos 30 vínculos por recorte | parquet e agregados |
-| `dag_modelo_salarial` | quando a `dag_rais` publica | modelo salarial (por exemplo, decomposição de Oaxaca-Blinder por recorte) | tabelas agregadas |
+| `dag_salarial` | quando a `dag_rais` publica | modelo salarial (por exemplo, decomposição de Oaxaca-Blinder por recorte) | tabelas agregadas |
 | `dag_oportunidades` | semanal, se o RF-10 virar coleta | catálogo de cursos e bolsas, com a data de atualização | catálogo |
 
 Cada DAG só chama funções dos pacotes dos repositórios, que continuam testáveis sem Airflow. Uma DAG só publica se todas as etapas passarem, a mesma regra da [publicação atômica](../rag/pipeline.md).

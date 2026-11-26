@@ -91,6 +91,8 @@ Custos estimados com preços de tabela em East US, ainda **sem conferência** na
 5. **Langfuse:** mascarar dados pessoais antes do trace e definir a retenção.
 6. **Pico de LLM na apresentação:** preparar cache das perguntas da demonstração ou cota maior.
 
+**Issues abertas na revisão de arquitetura deste ADR:** [docs#50](https://github.com/ArtemisHubApp/artemishub_docs/issues/50) (fronteira de dados dos agents), [docs#51](https://github.com/ArtemisHubApp/artemishub_docs/issues/51) (ADR de LGPD), [docs#52](https://github.com/ArtemisHubApp/artemishub_docs/issues/52) (matriz de navegadores), [backend#27](https://github.com/ArtemisHubApp/artemishub_backend/issues/27) (latência, timeout e streaming), [backend#28](https://github.com/ArtemisHubApp/artemishub_backend/issues/28) (id de correlação), [backend#29](https://github.com/ArtemisHubApp/artemishub_backend/issues/29) (cota de perguntas), [backend#30](https://github.com/ArtemisHubApp/artemishub_backend/issues/30) (cabeçalhos de segurança) e [agents#64](https://github.com/ArtemisHubApp/artemishub_agents/issues/64) (schema das tabelas da RAIS). O checklist do deploy está num comentário da [backend#6](https://github.com/ArtemisHubApp/artemishub_backend/issues/6).
+
 **Para aceitar este ADR, a equipe confirma:**
 
 - se o modelo salarial será Oaxaca-Blinder ou outro (afeta a `dag_salarial` e o uso do MLflow);

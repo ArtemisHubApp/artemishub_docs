@@ -49,7 +49,7 @@ flowchart LR
 
 ## Decisões de arquitetura (ADRs)
 
-As decisões ficam em [Decisões (ADRs)](../adr/index.md). A proposta de implantação e de atualização das bases (Azure for Students, Airflow efêmero e DVC no DagsHub) está em [Implantação e pipelines de dados](implantacao.md) ([ADR-012](../adr/012-implantacao-e-pipelines-de-dados.md), proposto). O sistema multiagente usa LangGraph e Langfuse ([ADR-002](../adr/002-framework-multiagente.md)); o desenho completo está em [Arquitetura multiagente](multiagentes.md). A stack do frontend continua "a definir pela equipe" (ADR-001).
+A arquitetura completa, com contexto, containers, componentes, implantação e a sequência de uma pergunta, está em [Visões C4](visoes-c4.md). As decisões ficam em [Decisões (ADRs)](../adr/index.md). A proposta de implantação e de atualização das bases (Azure for Students, Airflow efêmero e DVC no DagsHub) está em [Implantação e pipelines de dados](implantacao.md) ([ADR-012](../adr/012-implantacao-e-pipelines-de-dados.md), proposto). O sistema multiagente usa LangGraph e Langfuse ([ADR-002](../adr/002-framework-multiagente.md)); o desenho completo está em [Arquitetura multiagente](multiagentes.md). A stack do frontend continua "a definir pela equipe" (ADR-001).
 
 ## Próximos documentos previstos
 

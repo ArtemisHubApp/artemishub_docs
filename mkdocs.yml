@@ -132,6 +132,7 @@ nav:
       - Demonstração: rag/demonstracao.md
   - Arquitetura:
       - arquitetura/index.md
+      - Visões C4: arquitetura/visoes-c4.md
       - Arquitetura do RAG: arquitetura/rag.md
       - Arquitetura multiagente: arquitetura/multiagentes.md
       - Arquitetura do backend: arquitetura/backend.md

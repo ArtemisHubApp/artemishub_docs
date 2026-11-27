@@ -18,3 +18,4 @@ Para um ADR novo, copie o formato do [ADR-002](002-framework-multiagente.md) e u
 | [ADR-010](010-codigo-limpo-hexagonal.md) | Código limpo e clean architecture (hexagonal) com checagem no CI | proposto |
 | [ADR-011](011-orquestrador-formata-resposta.md) | O orquestrador formata a resposta final, sem agente de Comunicação | aceito |
 | [ADR-012](012-implantacao-e-pipelines-de-dados.md) | Implantação no Azure for Students com dados publicados como artefato (Airflow efêmero, DVC no DagsHub) | proposto |
+| [ADR-013](013-semver-e-releases.md) | Releases em SemVer, com nome e notas gerados dos PRs, iguais nos 6 repos | proposto |

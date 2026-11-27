@@ -153,6 +153,7 @@ nav:
           - ADR-010 Código limpo e hexagonal: adr/010-codigo-limpo-hexagonal.md
           - ADR-011 Orquestrador formata a resposta: adr/011-orquestrador-formata-resposta.md
           - ADR-012 Implantação e pipelines de dados: adr/012-implantacao-e-pipelines-de-dados.md
+          - ADR-013 SemVer e releases: adr/013-semver-e-releases.md
   - Avaliação:
       - avaliacao/index.md
       - Limitações e próximos passos: avaliacao/limitacoes.md

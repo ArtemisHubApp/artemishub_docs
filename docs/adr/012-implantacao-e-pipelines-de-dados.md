@@ -36,9 +36,12 @@ Separar o sistema em dois planos.
 | `gateway` | Azure Container Apps | Caddy entrega o build do frontend e faz proxy de `/api`. Assim o PWA e a API ficam na mesma origem. |
 | `backend` | Azure Container Apps | FastAPI em camadas hexagonais (`adapters` → `application` → `domain`): cadastro, sessão, conta e conversas em `/v1`. Sem ingress público, atrás do gateway. |
 | `agents` | Azure Container Apps | LangGraph. O índice do RAG e as tabelas da RAIS **vêm dentro da imagem**, somente leitura. |
-| Banco | Postgres Flexible B1ms | contas, conversas e checkpointer do LangGraph (gratuito por 12 meses na assinatura de estudante) |
+| `leitor` | Azure Container Apps (scale-to-zero) | Lê o currículo enviado em PDF ou foto, na CPU, com um modelo aberto escolhido pela Ana Julia. **Isolado: sem saída para a internet e sem acesso ao banco**, porque é quem abre arquivos de terceiros. Recebe os bytes do backend e devolve só o texto. |
+| Banco | Postgres Flexible B1ms | contas, conversas e o **texto** do currículo (conferido e mascarado), objetivo e competências confirmadas. Gratuito por 12 meses na assinatura de estudante. Se o checkpointer do LangGraph fica aqui ainda está em aberto ([docs#50](https://github.com/ArtemisHubApp/artemishub_docs/issues/50)) |
 | Imagens | Azure Container Registry Basic | ou GHCR, se a equipe preferir custo zero |
-| Segredos | segredos do Container Apps | chave do LLM, token do Langfuse e token de leitura do DagsHub |
+| Segredos | segredos do Container Apps | chave do LLM, token do Langfuse, token de leitura do DagsHub e tokens de serviço dos agents e do leitor |
+
+**Currículo sem armazenamento de arquivo.** O PDF ou a foto passam só pela memória do backend e do leitor e **nunca são gravados**: nada de Blob, disco ou log. Só o texto que a usuária confere, sem e-mail, telefone, CPF e CEP, fica no Postgres. Isso dispensa um Blob Storage, a regra de retenção dele e a exclusão em dois lugares. O custo dessa escolha: se o modelo de leitura mudar, a usuária precisa enviar o currículo de novo. Detalhes no [desenho do currículo](https://github.com/ArtemisHubApp/artemishub_backend/blob/claude/pensive-franklin-ggl64a/docs/superpowers/specs/2026-11-26-curriculo-design.md).
 
 **Plano de dados (batch, fora do Azure):**
 

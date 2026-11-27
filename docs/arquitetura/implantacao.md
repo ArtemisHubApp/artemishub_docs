@@ -31,6 +31,7 @@ flowchart LR
         FE --> GW[gateway<br/>Caddy]
         GW -- /api --> BE[backend<br/>FastAPI]
         BE --> PG[(Postgres Flexible)]
+        BE -- bytes do currículo --> LE[leitor<br/>sem rede · sem banco]
         BE --> AG[agents<br/>LangGraph + RAG]
         AG --> LLM[(LLM)]
         AG -. traces .-> LF[[Langfuse]]
@@ -46,9 +47,12 @@ flowchart LR
 | `gateway` | Container Apps | entrega o build do frontend e faz proxy de `/api`, mantendo a mesma origem que o cookie `SameSite=Strict` exige |
 | `backend` | Container Apps (ingress interno) | camadas hexagonais; cadastro, sessão em cookie, conta e conversas em `/v1` ([Arquitetura do backend](backend.md)) |
 | `agents` | Container Apps (ingress interno) | multiagentes com o RAG embutido, somente leitura |
-| Postgres | Flexible Server B1ms | dados pessoais ficam só aqui |
+| `leitor` | Container Apps (ingress interno, scale-to-zero) | lê o currículo em PDF ou foto na CPU, com modelo aberto; **sem saída para a internet e sem banco** |
+| Postgres | Flexible Server B1ms | dados pessoais ficam só aqui, inclusive o **texto** do currículo, conferido e mascarado |
 
 O PWA usa `vite-plugin-pwa`. O service worker guarda só o shell e os assets, nunca respostas da API.
+
+O currículo enviado (PDF ou foto) **nunca é gravado**: passa só pela memória do backend e do leitor, e só o texto que a usuária confere fica no Postgres. Por isso a arquitetura não tem Blob Storage. Detalhes no [desenho do currículo](https://github.com/ArtemisHubApp/artemishub_backend/blob/claude/pensive-franklin-ggl64a/docs/superpowers/specs/2026-11-26-curriculo-design.md).
 
 ## Stack
 
@@ -58,6 +62,7 @@ O PWA usa `vite-plugin-pwa`. O service worker guarda só o shell e os assets, nu
 | Backend | Python 3.12, FastAPI, SQLAlchemy 2 async, asyncpg, Alembic, Postgres 16; pytest e testcontainers | em uso |
 | Agentes | Python 3.12, LangGraph, `langchain-openai` (Gemini Flash), Langfuse, pandas, pyarrow | em uso |
 | RAG | Python 3.11 a 3.13, ChromaDB, sentence-transformers (MiniLM multilíngue), BM25 + RRF, PyMuPDF, BeautifulSoup, httpx | em uso |
+| Leitor de currículo | PyMuPDF e um modelo aberto de leitura de imagem na CPU (candidatos: RapidOCR, docTR, Florence-2; escolha da Ana Julia) | planejado ([agents#14](https://github.com/ArtemisHubApp/artemishub_agents/issues/14)) |
 | Dados e MLOps | DVC e DagsHub (em uso); Airflow 3, MLflow e o modelo salarial (planejados) | parcial |
 | Infra e entrega | uv, Docker, docker compose, GitHub Actions (em uso); Caddy, Azure Container Apps, Postgres Flexible, GHCR ou ACR, Azure Budgets (planejados) | parcial |
 | Docs e processo | MkDocs Material, GitHub Pages, ADRs, `AGENTS.md`, Superpowers (SDD), GitHub Projects | em uso |
@@ -85,7 +90,7 @@ Cada DAG só chama funções dos pacotes dos repositórios, que continuam testá
 
 | Item | US$/mês |
 |---|---|
-| Container Apps (dentro da cota gratuita; com 1 réplica mínima nos `agents`, de 10 a 25) | 0 a 25 |
+| Container Apps (dentro da cota gratuita, inclusive o `leitor` com scale-to-zero; com 1 réplica mínima nos `agents`, de 10 a 25) | 0 a 25 |
 | Postgres B1ms (gratuito por 12 meses na assinatura de estudante) | 0 |
 | Registro de imagens (ACR Basic; GHCR é gratuito) | 0 a 5 |
 | Airflow no GitHub Actions, DagsHub, MLflow | 0 |
